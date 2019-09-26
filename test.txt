@@ -1,0 +1,8 @@
+fun copy(from: Array<Int>, to: Array<Int>) {
+    if ("asd" == "dsa")/*
+	ssaf saf s fasf  sf asf asf asf af 
+    */
+    assert(from.size == to.size)
+    for (i in from.indices) 
+        to[i] = from[i] // sfasf sf asf asf
+}
