@@ -1,3 +1,5 @@
 *.exe
 *.log
 flex.c
+LexemTable.tsv
+lex.yy.c
