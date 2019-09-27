@@ -17,8 +17,31 @@
 %x MLCOMMENT
 %x LCOMMENT
 
+ID				[a-z][_a-z0-9]*
+
 WHITESPACE [ \t\r]
 NEXTLINE [\n]
+
+D2          	[01]
+D_2				[_01]
+D8          	[0-7]
+D_8          	[_0-7]
+D10          	[0-9]
+D_10          	[_0-9]
+D16				[0-9a-f]
+D_16			[_0-9a-f]
+
+INT_16 			0x({D16}{D_16}*)?{D16}
+INT_10 			  ({D10}{D_10}*)?{D10}
+INT_8 			0c({D8}{D_8}*)?{D8}
+INT_2 			0b({D2}{D_2}*)?{D2}
+
+NUM          	[0-9]+
+REAL_0          (([0-9]*[\.]{NUM})|({NUM}[\.][0-9]*))
+REAL          	((({INT_10})?[\.]{INT_10})|({INT_10}[\.]({INT_10})?))
+EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
+
+
 %{
 	int count = 0; 
         char str[100];
@@ -90,28 +113,28 @@ actual 	{lexprint(yytext, "ACTUAL", yylineno);}
 abstract 	{lexprint(yytext, "ABSTRACT", yylineno);}
 annotation  	{lexprint(yytext, "ANNOTATION", yylineno);}
 companion  	{lexprint(yytext, "COMPANION", yylineno);}
-const  	{lexprint(yytext, "CONST", yylineno);}
+const  	        {lexprint(yytext, "CONST", yylineno);}
 crossinline  	{lexprint(yytext, "CROSSINLINE", yylineno);}
-data 	{lexprint(yytext, "DATA", yylineno);}
-enum 	{lexprint(yytext, "ENUM", yylineno);}
-expect 	{lexprint(yytext, "EXPECT", yylineno);}
+data 	        {lexprint(yytext, "DATA", yylineno);}
+enum 	        {lexprint(yytext, "ENUM", yylineno);}
+expect 	        {lexprint(yytext, "EXPECT", yylineno);}
 extrnal  	{lexprint(yytext, "EXTERNAL", yylineno);}
-final  	{lexprint(yytext, "FINAL", yylineno);}
-infix  	{lexprint(yytext, "INFIX", yylineno);}
-inline 	{lexprint(yytext, "INLINE", yylineno);}
-inner 	{lexprint(yytext, "INNER", yylineno);}
+final  	        {lexprint(yytext, "FINAL", yylineno);}
+infix  	        {lexprint(yytext, "INFIX", yylineno);}
+inline 	        {lexprint(yytext, "INLINE", yylineno);}
+inner 	        {lexprint(yytext, "INNER", yylineno);}
 internal  	{lexprint(yytext, "INTERNAL", yylineno);}
 lateinit  	{lexprint(yytext, "LATEINIT", yylineno);}
 noinline  	{lexprint(yytext, "NOINLINE", yylineno);}
-open  	{lexprint(yytext, "OPEN", yylineno);}
+open  	        {lexprint(yytext, "OPEN", yylineno);}
 operator 	{lexprint(yytext, "OPERATOR", yylineno);}
-out 	{lexprint(yytext, "OUT", yylineno);}
+out 	        {lexprint(yytext, "OUT", yylineno);}
 override  	{lexprint(yytext, "OVERRIDE", yylineno);}
 private  	{lexprint(yytext, "PRIVATE", yylineno);}
 protected  	{lexprint(yytext, "PROTECTED", yylineno);}
 public  	{lexprint(yytext, "PUBLIC", yylineno);}
 reified 	{lexprint(yytext, "REIFIED", yylineno);}
-sealed 	{lexprint(yytext, "SEALED", yylineno);}
+sealed 	        {lexprint(yytext, "SEALED", yylineno);}
 suspend  	{lexprint(yytext, "SUSPEND", yylineno);}
 tailred  	{lexprint(yytext, "TAILRED", yylineno);}
 vararg  	{lexprint(yytext, "VARARG", yylineno);}
@@ -176,7 +199,14 @@ it  	{lexprint(yytext, "IT", yylineno);}
 "_"  	{lexprint(yytext, "SUBSTITUTE_AN_UNUSED_PARAMETER", yylineno);}
 "$"  	{lexprint(yytext, "REFERENCES_A_VARIABLE_OR_EXPRESSION_IN_A_STRING_TEMPLATE", yylineno);}
 
- 
+{ID}       {lexprint(yytext, "ID", yylineno);}
+{EXPONENT} {lexprint(yytext, "EXPONENT", yylineno);}
+{INT_10}   {lexprint(yytext, "INT_10", yylineno);}
+{INT_16}   {lexprint(yytext, "INT_16", yylineno);}
+{INT_8}	   {lexprint(yytext, "INT_8", yylineno);}
+{INT_2}	   {lexprint(yytext, "INT_2", yylineno);}
+{REAL}[^.] {lexprint(yytext, "REAL", yylineno);}
+
 
 \/\*            { str[0]=0; BEGIN(MLCOMMENT); }
 <MLCOMMENT>.     { strcat(str,yytext);}
