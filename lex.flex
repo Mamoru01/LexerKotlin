@@ -62,15 +62,37 @@ var 	{lexprint(yytext, "VAR", yylineno);}
 when 	{lexprint(yytext, "WHEN", yylineno);}
 while 	{lexprint(yytext, "WHILE", yylineno);}
 
-/*Soft Keywords*/
+/*Modifier Keywords*/
 
-actual 	{lexprint(yytext, "AS", yylineno);}
-abstract 	{lexprint(yytext, "AS?", yylineno);}
-annotation  	{lexprint(yytext, "break", yylineno);}
-companion  	{lexprint(yytext, "AS", yylineno);}
-const  	{lexprint(yytext, "AS", yylineno);}
-crossinline  	{lexprint(yytext, "AS", yylineno);}
-/*TODO: https://kotlinlang.ru/docs/reference/keyword-reference.html*/
+actual 	{lexprint(yytext, "ACTUAL", yylineno);}
+abstract 	{lexprint(yytext, "ABSTRACT", yylineno);}
+annotation  	{lexprint(yytext, "ANNOTATION", yylineno);}
+companion  	{lexprint(yytext, "COMPANION", yylineno);}
+const  	{lexprint(yytext, "CONST", yylineno);}
+crossinline  	{lexprint(yytext, "CROSSINLINE", yylineno);}
+data 	{lexprint(yytext, "DATA", yylineno);}
+enum 	{lexprint(yytext, "ENUM", yylineno);}
+expect 	{lexprint(yytext, "EXPECT", yylineno);}
+extrnal  	{lexprint(yytext, "EXTERNAL", yylineno);}
+final  	{lexprint(yytext, "FINAL", yylineno);}
+infix  	{lexprint(yytext, "INFIX", yylineno);}
+inline 	{lexprint(yytext, "INLINE", yylineno);}
+inner 	{lexprint(yytext, "INNER", yylineno);}
+internal  	{lexprint(yytext, "INTERNAL", yylineno);}
+lateinit  	{lexprint(yytext, "LATEINIT", yylineno);}
+noinline  	{lexprint(yytext, "NOINLINE", yylineno);}
+open  	{lexprint(yytext, "OPEN", yylineno);}
+operator 	{lexprint(yytext, "OPERATOR", yylineno);}
+out 	{lexprint(yytext, "OUT", yylineno);}
+override  	{lexprint(yytext, "OVERRIDE", yylineno);}
+private  	{lexprint(yytext, "PRIVATE", yylineno);}
+protected  	{lexprint(yytext, "PROTECTED", yylineno);}
+public  	{lexprint(yytext, "PUBLIC", yylineno);}
+reified 	{lexprint(yytext, "REIFIED", yylineno);}
+sealed 	{lexprint(yytext, "SEALED", yylineno);}
+suspend  	{lexprint(yytext, "SUSPEND", yylineno);}
+tailred  	{lexprint(yytext, "TAILRED", yylineno);}
+vararg  	{lexprint(yytext, "VARARG", yylineno);}
 
 
 \/\*            { str[0]=0; BEGIN(MLCOMMENT); }
