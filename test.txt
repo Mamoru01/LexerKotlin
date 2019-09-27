@@ -1,8 +1,13 @@
-fun copy(from: Array<Int>, to: Array<Int>) {
-    if ("asd" == "dsa")/*
-	ssaf saf s fasf  sf asf asf asf af 
-    */
-    assert(from.size == to.size)
-    for (i in from.indices) 
-        to[i] = from[i] // sfasf sf asf asf
+class MyClass (val a: Int, var b: String){
+    private val c = intArrayOf(2,0,1,9);
+    private lateinit var str: String
+    fun someFun(): Int {
+        return a + c[1];
+    }
+
+    init {
+        str = "sdf $b  faxs fasf $a sfas"
+	str = "$n"
+        someFun()
+    }
 }
