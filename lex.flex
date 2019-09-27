@@ -29,7 +29,7 @@
 %}
 %% 
 
-/*Hard Keywords*/
+
 
 as	{lexprint(yytext, "AS", yylineno);}
 as\?	{lexprint(yytext, "AS?", yylineno);}
@@ -62,7 +62,7 @@ var 	{lexprint(yytext, "VAR", yylineno);}
 when 	{lexprint(yytext, "WHEN", yylineno);}
 while 	{lexprint(yytext, "WHILE", yylineno);}
 
-/*Soft Keywords*/
+
 
 by 	{lexprint(yytext, "BY", yylineno);}
 catch 	{lexprint(yytext, "CATCH", yylineno);}
@@ -82,7 +82,7 @@ set  	{lexprint(yytext, "SET", yylineno);}
 setparam  	{lexprint(yytext, "SETPARAM", yylineno);}
 where  	{lexprint(yytext, "WHERE", yylineno);}
 
-/*Modifier Keywords*/
+
 
 actual 	{lexprint(yytext, "ACTUAL", yylineno);}
 abstract 	{lexprint(yytext, "ABSTRACT", yylineno);}
@@ -114,57 +114,57 @@ suspend  	{lexprint(yytext, "SUSPEND", yylineno);}
 tailred  	{lexprint(yytext, "TAILRED", yylineno);}
 vararg  	{lexprint(yytext, "VARARG", yylineno);}
 
-/*Special Identifiers*/
+
 
 field  	{lexprint(yytext, "FIELD", yylineno);}
 it  	{lexprint(yytext, "IT", yylineno);}
 
-/*Operators and Special Symbols*/
 
-/*Match*/
+
+
 "+"  	{lexprint(yytext, "SUM", yylineno);}
 "-"  	{lexprint(yytext, "MINUS", yylineno);}
 "*"  	{lexprint(yytext, "MULTIPLY", yylineno);}
 "/"  	{lexprint(yytext, "DIV", yylineno);}
 "%"  	{lexprint(yytext, "MOD", yylineno);}
 
-/*Assignment*/
+ 
 "="  	{lexprint(yytext, "ASSIGN", yylineno);}
 
-/*Extended Assignment*/
+ 
 "+="  	{lexprint(yytext, "SUM_ASSIGN", yylineno);}
 "-="  	{lexprint(yytext, "MINUS_ASSIGN", yylineno);}
 "*="  	{lexprint(yytext, "MULTIPLY_ASSIGN", yylineno);}
 "/="  	{lexprint(yytext, "DIV_ASSIGN", yylineno);}
 "%="  	{lexprint(yytext, "MOD_ASSIGN", yylineno);}
 
-/*Шncrement and decrement*/
+ 
 "++"  	{lexprint(yytext, "INC", yylineno);}
 "--"  	{lexprint(yytext, "DEC", yylineno);}
 
-/*Logical operators*/
+ 
 "&&"  	{lexprint(yytext, "AND", yylineno);}
 "||"  	{lexprint(yytext, "OR", yylineno);}
 "!"  	{lexprint(yytext, "NO", yylineno);}
 
-/*Equal operator*/
+ 
 "=="  	{lexprint(yytext, "EQUAL", yylineno);}
 "!="  	{lexprint(yytext, "NOEQUAL", yylineno);}
 
-/*Equal operator for links*/
+ 
 "==="  	{lexprint(yytext, "EQUAL_LINK", yylineno);}
 "!=="  	{lexprint(yytext, "NOEQUAL_LINK", yylineno);}
 
-/*Comparison operator*/
+ 
 ">"  	{lexprint(yytext, "MORE", yylineno);}
 "<"  	{lexprint(yytext, "SMALLER", yylineno);}
 ">="  	{lexprint(yytext, "MORE_OR_EQUAL", yylineno);}
 "<="  	{lexprint(yytext, "SMALLER_OR_EQUAL", yylineno);}
 
-/*Comparison operator*/
+ 
 "+"  	{lexprint(yytext, "SUM", yylineno);}
 
-/*Comment*/
+ 
 
 \/\*            { str[0]=0; BEGIN(MLCOMMENT); }
 <MLCOMMENT>.     { strcat(str,yytext);}
@@ -173,7 +173,7 @@ it  	{lexprint(yytext, "IT", yylineno);}
 \/\/            { str[0]=0; BEGIN(LCOMMENT); }
 <LCOMMENT>.     { strcat(str,yytext);}
 <LCOMMENT>\\n   { BEGIN(INITIAL); lexprint(str, "LCOMMENT", yylineno); BEGIN(INITIAL);}
-/*TODO: fix line comment*/
+ 
 
 \' {str[0]=0; BEGIN(SYMBOL);}
 <SYMBOL>\\\\ {strcat(str,"\\");}
@@ -210,7 +210,7 @@ void main(int argc, char **argv )
 	freopen("LexemTable.tsv", "w", stdout);
 	freopen("tmp\err.log", "w", stderr);
 
-        if (argc > 0){yyin = fopen( "argv[1]", "r" );} else yyin = stdin;
+        if (argc > 0){yyin = fopen( argv[1], "r" );} else yyin = stdin;
         
         printf("lexem\ttoken\tline\tnumber\n");
         
