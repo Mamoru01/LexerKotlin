@@ -29,7 +29,7 @@
 %}
 %% 
 
-/*Hard Keywords*/
+
 
 as	{lexprint(yytext, "AS", yylineno);}
 as\?	{lexprint(yytext, "AS?", yylineno);}
@@ -62,7 +62,7 @@ var 	{lexprint(yytext, "VAR", yylineno);}
 when 	{lexprint(yytext, "WHEN", yylineno);}
 while 	{lexprint(yytext, "WHILE", yylineno);}
 
-/*Soft Keywords*/
+
 
 by 	{lexprint(yytext, "BY", yylineno);}
 catch 	{lexprint(yytext, "CATCH", yylineno);}
@@ -82,7 +82,7 @@ set  	{lexprint(yytext, "SET", yylineno);}
 setparam  	{lexprint(yytext, "SETPARAM", yylineno);}
 where  	{lexprint(yytext, "WHERE", yylineno);}
 
-/*Modifier Keywords*/
+
 
 actual 	{lexprint(yytext, "ACTUAL", yylineno);}
 abstract 	{lexprint(yytext, "ABSTRACT", yylineno);}
@@ -114,12 +114,12 @@ suspend  	{lexprint(yytext, "SUSPEND", yylineno);}
 tailred  	{lexprint(yytext, "TAILRED", yylineno);}
 vararg  	{lexprint(yytext, "VARARG", yylineno);}
 
-/*Special Identifiers*/
+
 
 field  	{lexprint(yytext, "FIELD", yylineno);}
 it  	{lexprint(yytext, "IT", yylineno);}
 
-/*TODO: Add Operators and Special Symbols*/
+
 
 \/\*            { str[0]=0; BEGIN(MLCOMMENT); }
 <MLCOMMENT>.     { strcat(str,yytext);}
@@ -128,7 +128,7 @@ it  	{lexprint(yytext, "IT", yylineno);}
 \/\/            { str[0]=0; BEGIN(LCOMMENT); }
 <LCOMMENT>.     { strcat(str,yytext);}
 <LCOMMENT>\\n   { BEGIN(INITIAL); lexprint(str, "LCOMMENT", yylineno); BEGIN(INITIAL);}
-/*TODO: fix line comment*/
+
 
 \' {str[0]=0; BEGIN(SYMBOL);}
 <SYMBOL>\\\\ {strcat(str,"\\");}
@@ -165,10 +165,10 @@ void main(int argc, char **argv )
 	freopen("LexemTable.tsv", "w", stdout);
 	freopen("tmp\err.log", "w", stderr);
 
-        if (argc > 0){yyin = fopen( "argv[1]", "r" );} else yyin = stdin;
-        
+        if (argc > 0){yyin = fopen( argv[1], "r" );} else yyin = stdin;
+
         printf("lexem\ttoken\tline\tnumber\n");
-        
+
         yylex();
         return;
 }
