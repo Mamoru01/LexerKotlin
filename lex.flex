@@ -256,6 +256,13 @@ it  	{lexprint(yytext, "IT", yylineno);}
 <STRING>\\e {strcat(str,"\e");}
 <STRING>\\f {strcat(str,"\f");}
 <STRING>\\$ {strcat(str,"\$");}
+<STRING>\${ID} {
+        lexprint(str, "STRING", yylineno);
+        lexprint("+", "SUM", yylineno);
+        lexprint((yytext+1), "ID", yylineno);
+        lexprint("+", "SUM", yylineno);
+        str[0]=0;
+}
 <STRING>[^\\\"\n] {strcat(str,yytext);}
 <STRING>\" {lexprint(str, "STRING", yylineno); BEGIN(INITIAL);}
 
