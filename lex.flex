@@ -62,6 +62,8 @@ var 	{lexprint(yytext, "VAR", yylineno);}
 when 	{lexprint(yytext, "WHEN", yylineno);}
 while 	{lexprint(yytext, "WHILE", yylineno);}
 
+/*TODO: Add soft Keywords*/
+
 /*Modifier Keywords*/
 
 actual 	{lexprint(yytext, "ACTUAL", yylineno);}
