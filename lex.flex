@@ -17,7 +17,7 @@
 %x MLCOMMENT
 %x LCOMMENT
 
-ID				[a-z][_a-z0-9]*
+ID		[a-z][_a-z0-9]*
 CLASSNAME       [A-Z][_a-z0-9]*
 
 WHITESPACE [ \t\r]
@@ -201,7 +201,7 @@ it  	{lexprint(yytext, "IT", yylineno);}
 "$"  	{lexprint(yytext, "REFERENCES_A_VARIABLE_OR_EXPRESSION_IN_A_STRING_TEMPLATE", yylineno);}
 
 {ID}       {lexprint(yytext, "ID", yylineno);}
-{CLASSNAME}{lexprint(yytext, "CLASSNAME", yylineno);}
+{CLASSNAME} {lexprint(yytext, "CLASSNAME", yylineno);}
 {EXPONENT} {lexprint(yytext, "EXPONENT", yylineno);}
 {INT_10}   {lexprint(yytext, "INT_10", yylineno);}
 {INT_16}   {lexprint(yytext, "INT_16", yylineno);}
