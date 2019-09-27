@@ -201,14 +201,13 @@ it  	{lexprint(yytext, "IT", yylineno);}
 <STRING>[^\\\"\n] {strcat(str,yytext);}
 <STRING>\" {lexprint(str, "STRING", yylineno); BEGIN(INITIAL);}
 
-. {printf(yytext, "Not Found", yylineno);}
+. {fprintf(stderr, "%s Not Found in %d line \n", yytext, yylineno);}
 
 %% 
   
-void main(int argc, char **argv )
-{
+void main(int argc, char **argv ){
 	freopen("LexemTable.tsv", "w", stdout);
-	freopen("tmp\err.log", "w", stderr);
+	freopen("err.log", "w", stderr);
 
         if (argc > 0){yyin = fopen( argv[1], "r" );} else yyin = stdin;
         
