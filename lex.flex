@@ -33,34 +33,34 @@
 
 as	{lexprint(yytext, "AS", yylineno);}
 as\?	{lexprint(yytext, "AS?", yylineno);}
-break 	{lexprint(yytext, "break", yylineno);}
-class 	{lexprint(yytext, "AS", yylineno);}
-continue 	{lexprint(yytext, "AS", yylineno);}
-do 	{lexprint(yytext, "AS", yylineno);}
-else 	{lexprint(yytext, "AS", yylineno);}
-false 	{lexprint(yytext, "AS", yylineno);}
-for 	{lexprint(yytext, "AS", yylineno);}
-fun 	{lexprint(yytext, "AS", yylineno);}
-if 	{lexprint(yytext, "AS", yylineno);}
-in	{lexprint(yytext, "AS", yylineno);}
-\!in	{lexprint(yytext, "AS", yylineno);}
-interface 	{lexprint(yytext, "AS", yylineno);}
-is	{lexprint(yytext, "AS", yylineno);}
-\!is	{lexprint(yytext, "AS", yylineno);}
-null	{lexprint(yytext, "AS", yylineno);}
-object 	{lexprint(yytext, "AS", yylineno);}
-package 	{lexprint(yytext, "AS", yylineno);}
-return 	{lexprint(yytext, "AS", yylineno);}
-super	{lexprint(yytext, "AS", yylineno);}
-this	{lexprint(yytext, "AS", yylineno);}
-throw 	{lexprint(yytext, "AS", yylineno);}
-true 	{lexprint(yytext, "AS", yylineno);}
-try 	{lexprint(yytext, "AS", yylineno);}
-typealias 	{lexprint(yytext, "AS", yylineno);}
-val 	{lexprint(yytext, "AS", yylineno);}
-var 	{lexprint(yytext, "AS", yylineno);}
-when 	{lexprint(yytext, "AS", yylineno);}
-while 	{lexprint(yytext, "AS", yylineno);}
+break 	{lexprint(yytext, "BREAK", yylineno);}
+class 	{lexprint(yytext, "CLASS", yylineno);}
+continue 	{lexprint(yytext, "continue", yylineno);}
+do 	{lexprint(yytext, "DO", yylineno);}
+else 	{lexprint(yytext, "ELSE", yylineno);}
+false 	{lexprint(yytext, "FALSE", yylineno);}
+for 	{lexprint(yytext, "FOR", yylineno);}
+fun 	{lexprint(yytext, "FUN", yylineno);}
+if 	{lexprint(yytext, "IF", yylineno);}
+in	{lexprint(yytext, "IN", yylineno);}
+\!in	{lexprint(yytext, "NOIN", yylineno);}
+interface 	{lexprint(yytext, "INTERFACE", yylineno);}
+is	{lexprint(yytext, "IS", yylineno);}
+\!is	{lexprint(yytext, "NOIS", yylineno);}
+null	{lexprint(yytext, "NULL", yylineno);}
+object 	{lexprint(yytext, "OBJECT", yylineno);}
+package 	{lexprint(yytext, "PACKAGE", yylineno);}
+return 	{lexprint(yytext, "RETURN", yylineno);}
+super	{lexprint(yytext, "SUPER", yylineno);}
+this	{lexprint(yytext, "THIS", yylineno);}
+throw 	{lexprint(yytext, "THROW", yylineno);}
+true 	{lexprint(yytext, "TRUE", yylineno);}
+try 	{lexprint(yytext, "TRY", yylineno);}
+typealias 	{lexprint(yytext, "TYPEALIAS", yylineno);}
+val 	{lexprint(yytext, "VAL", yylineno);}
+var 	{lexprint(yytext, "VAR", yylineno);}
+when 	{lexprint(yytext, "WHEN", yylineno);}
+while 	{lexprint(yytext, "WHILE", yylineno);}
 
 /*Soft Keywords*/
 
@@ -70,7 +70,7 @@ annotation  	{lexprint(yytext, "break", yylineno);}
 companion  	{lexprint(yytext, "AS", yylineno);}
 const  	{lexprint(yytext, "AS", yylineno);}
 crossinline  	{lexprint(yytext, "AS", yylineno);}
-/*TODO: */
+/*TODO: https://kotlinlang.ru/docs/reference/keyword-reference.html*/
 
 
 \/\*            { str[0]=0; BEGIN(MLCOMMENT); }
@@ -80,6 +80,7 @@ crossinline  	{lexprint(yytext, "AS", yylineno);}
 \/\/            { str[0]=0; BEGIN(LCOMMENT); }
 <LCOMMENT>.     { strcat(str,yytext);}
 <LCOMMENT>\\n   { BEGIN(INITIAL); lexprint(str, "LCOMMENT", yylineno); BEGIN(INITIAL);}
+/*TODO: fix line comment*/
 
 \' {str[0]=0; BEGIN(SYMBOL);}
 <SYMBOL>\\\\ {strcat(str,"\\");}
