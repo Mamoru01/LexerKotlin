@@ -17,6 +17,8 @@
 %x MLCOMMENT
 %x LCOMMENT
 
+WHITESPACE [ \t\r]
+NEXTLINE [\n]
 %{
 	int count = 0; 
         char str[100];
@@ -161,8 +163,18 @@ it  	{lexprint(yytext, "IT", yylineno);}
 ">="  	{lexprint(yytext, "MORE_OR_EQUAL", yylineno);}
 "<="  	{lexprint(yytext, "SMALLER_OR_EQUAL", yylineno);}
 
- 
-"+"  	{lexprint(yytext, "SUM", yylineno);}
+"!!"  	{lexprint(yytext, "ASSERT_NON_NULL", yylineno);}
+"?."  	{lexprint(yytext, "SAFE_CALL", yylineno);}
+"?:"  	{lexprint(yytext, "ELVIS_OPERATOR", yylineno);}
+"::"  	{lexprint(yytext, "CLASS_REFERENCE_OPERATOR", yylineno);}
+".."  	{lexprint(yytext, "CREATE_RANGE_OPERATOR", yylineno);}
+":"  	{lexprint(yytext, "NAME_TYPE_SEPARATOR", yylineno);}
+"?"  	{lexprint(yytext, "MARK_NULLABLE_TYPE", yylineno);}
+"->"  	{lexprint(yytext, "LAMBDA_EXPRESSION", yylineno);}
+"@"  	{lexprint(yytext, "ANNOTATION", yylineno);}
+";"  	{lexprint(yytext, "SEPARATOR_MULTIPLE_STATEMENT", yylineno);}
+"_"  	{lexprint(yytext, "SUBSTITUTE_AN_UNUSED_PARAMETER", yylineno);}
+"$"  	{lexprint(yytext, "REFERENCES_A_VARIABLE_OR_EXPRESSION_IN_A_STRING_TEMPLATE", yylineno);}
 
  
 
@@ -173,7 +185,9 @@ it  	{lexprint(yytext, "IT", yylineno);}
 \/\/            { str[0]=0; BEGIN(LCOMMENT); }
 <LCOMMENT>.     { strcat(str,yytext);}
 <LCOMMENT>\\n   { BEGIN(INITIAL); lexprint(str, "LCOMMENT", yylineno); BEGIN(INITIAL);}
- 
+
+{WHITESPACE}+ { /* skip {WHITESPACE} */ }
+{NEXTLINE}   { /* skip {NEXTLINE} */ }
 
 \' {str[0]=0; BEGIN(SYMBOL);}
 <SYMBOL>\\\\ {strcat(str,"\\");}
