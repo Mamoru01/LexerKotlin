@@ -62,7 +62,25 @@ var 	{lexprint(yytext, "VAR", yylineno);}
 when 	{lexprint(yytext, "WHEN", yylineno);}
 while 	{lexprint(yytext, "WHILE", yylineno);}
 
-/*TODO: Add soft Keywords*/
+/*Soft Keywords*/
+
+by 	{lexprint(yytext, "BY", yylineno);}
+catch 	{lexprint(yytext, "CATCH", yylineno);}
+constructor  	{lexprint(yytext, "CONSTRUCTOR", yylineno);}
+delegate  	{lexprint(yytext, "DELEGATE", yylineno);}
+dynamic  	{lexprint(yytext, "DYNAMIC", yylineno);}
+field  	{lexprint(yytext, "FIELD", yylineno);}
+file 	{lexprint(yytext, "FILE", yylineno);}
+finally 	{lexprint(yytext, "FINALLY", yylineno);}
+get 	{lexprint(yytext, "GET", yylineno);}
+import  	{lexprint(yytext, "IMPORT", yylineno);}
+init  	{lexprint(yytext, "INIT", yylineno);}
+param  	{lexprint(yytext, "PARAM", yylineno);}
+property 	{lexprint(yytext, "PROPERTY", yylineno);}
+receiver 	{lexprint(yytext, "RECEIVER", yylineno);}
+set  	{lexprint(yytext, "SET", yylineno);}
+setparam  	{lexprint(yytext, "SETPARAM", yylineno);}
+where  	{lexprint(yytext, "WHERE", yylineno);}
 
 /*Modifier Keywords*/
 
@@ -95,7 +113,6 @@ sealed 	{lexprint(yytext, "SEALED", yylineno);}
 suspend  	{lexprint(yytext, "SUSPEND", yylineno);}
 tailred  	{lexprint(yytext, "TAILRED", yylineno);}
 vararg  	{lexprint(yytext, "VARARG", yylineno);}
-
 
 /*TODO: Add Special Identifiers*/
 
