@@ -114,7 +114,10 @@ suspend  	{lexprint(yytext, "SUSPEND", yylineno);}
 tailred  	{lexprint(yytext, "TAILRED", yylineno);}
 vararg  	{lexprint(yytext, "VARARG", yylineno);}
 
-/*TODO: Add Special Identifiers*/
+/*Special Identifiers*/
+
+field  	{lexprint(yytext, "FIELD", yylineno);}
+it  	{lexprint(yytext, "IT", yylineno);}
 
 /*TODO: Add Operators and Special Symbols*/
 
