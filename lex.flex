@@ -211,6 +211,8 @@ it  	{lexprint(yytext, "IT", yylineno);}
 
 
 \/\*            { str[0]=0; BEGIN(MLCOMMENT); }
+<MLCOMMENT>\t     { strcat(str,"\\t");}
+<MLCOMMENT>\n     { strcat(str,"\\n");}
 <MLCOMMENT>.     { strcat(str,yytext);}
 <MLCOMMENT>\*\/   { lexprint(str, "MLCOMMENT", yylineno); BEGIN(INITIAL);}
 
@@ -231,7 +233,7 @@ it  	{lexprint(yytext, "IT", yylineno);}
 <SYMBOL>\\e {strcat(str,"\e");}
 <SYMBOL>\\f {strcat(str,"\f");}
 <SYMBOL>\\$ {strcat(str,"\$");}
-<SYMBOL>[^\\\"\n]+ {strcat(str,yytext);}
+<SYMBOL>[^\\\'\n]+ {strcat(str,yytext);}
 <SYMBOL>\' {lexprint(str, "SYMBOL", yylineno); BEGIN(INITIAL);}
 
 \" {str[0]=0; BEGIN(STRING);}
