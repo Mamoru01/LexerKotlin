@@ -214,9 +214,9 @@ it  	{lexprint(yytext, "IT", yylineno);}
 <MLCOMMENT>.     { strcat(str,yytext);}
 <MLCOMMENT>\*\/   { lexprint(str, "MLCOMMENT", yylineno); BEGIN(INITIAL);}
 
-\/\/            { str[0]=0; BEGIN(LCOMMENT); }
-<LCOMMENT>.     { strcat(str,yytext);}
-<LCOMMENT>\\n   { BEGIN(INITIAL); lexprint(str, "LCOMMENT", yylineno); BEGIN(INITIAL);}
+\/\/          { str[0]=0; BEGIN(LCOMMENT);}
+<LCOMMENT>\n  { lexprint(str, "LCOMMENT", yylineno); BEGIN(INITIAL);}
+<LCOMMENT>\w  { strcat(str,yytext);}
 
 {WHITESPACE}+ { /* skip {WHITESPACE} */ }
 {NEXTLINE}   { /* skip {NEXTLINE} */ }
