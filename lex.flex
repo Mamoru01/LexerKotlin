@@ -99,6 +99,8 @@ vararg  	{lexprint(yytext, "VARARG", yylineno);}
 
 /*TODO: Add Special Identifiers*/
 
+/*TODO: Add Operators and Special Symbols*/
+
 \/\*            { str[0]=0; BEGIN(MLCOMMENT); }
 <MLCOMMENT>.     { strcat(str,yytext);}
 <MLCOMMENT>\*\/   { lexprint(str, "MLCOMMENT", yylineno); BEGIN(INITIAL);}
