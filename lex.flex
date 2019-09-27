@@ -119,7 +119,52 @@ vararg  	{lexprint(yytext, "VARARG", yylineno);}
 field  	{lexprint(yytext, "FIELD", yylineno);}
 it  	{lexprint(yytext, "IT", yylineno);}
 
-/*TODO: Add Operators and Special Symbols*/
+/*Operators and Special Symbols*/
+
+/*Match*/
+"+"  	{lexprint(yytext, "SUM", yylineno);}
+"-"  	{lexprint(yytext, "MINUS", yylineno);}
+"*"  	{lexprint(yytext, "MULTIPLY", yylineno);}
+"/"  	{lexprint(yytext, "DIV", yylineno);}
+"%"  	{lexprint(yytext, "MOD", yylineno);}
+
+/*Assignment*/
+"="  	{lexprint(yytext, "ASSIGN", yylineno);}
+
+/*Extended Assignment*/
+"+="  	{lexprint(yytext, "SUM_ASSIGN", yylineno);}
+"-="  	{lexprint(yytext, "MINUS_ASSIGN", yylineno);}
+"*="  	{lexprint(yytext, "MULTIPLY_ASSIGN", yylineno);}
+"/="  	{lexprint(yytext, "DIV_ASSIGN", yylineno);}
+"%="  	{lexprint(yytext, "MOD_ASSIGN", yylineno);}
+
+/*Шncrement and decrement*/
+"++"  	{lexprint(yytext, "INC", yylineno);}
+"--"  	{lexprint(yytext, "DEC", yylineno);}
+
+/*Logical operators*/
+"&&"  	{lexprint(yytext, "AND", yylineno);}
+"||"  	{lexprint(yytext, "OR", yylineno);}
+"!"  	{lexprint(yytext, "NO", yylineno);}
+
+/*Equal operator*/
+"=="  	{lexprint(yytext, "EQUAL", yylineno);}
+"!="  	{lexprint(yytext, "NOEQUAL", yylineno);}
+
+/*Equal operator for links*/
+"==="  	{lexprint(yytext, "EQUAL_LINK", yylineno);}
+"!=="  	{lexprint(yytext, "NOEQUAL_LINK", yylineno);}
+
+/*Comparison operator*/
+">"  	{lexprint(yytext, "MORE", yylineno);}
+"<"  	{lexprint(yytext, "SMALLER", yylineno);}
+">="  	{lexprint(yytext, "MORE_OR_EQUAL", yylineno);}
+"<="  	{lexprint(yytext, "SMALLER_OR_EQUAL", yylineno);}
+
+/*Comparison operator*/
+"+"  	{lexprint(yytext, "SUM", yylineno);}
+
+/*Comment*/
 
 \/\*            { str[0]=0; BEGIN(MLCOMMENT); }
 <MLCOMMENT>.     { strcat(str,yytext);}
