@@ -211,14 +211,13 @@ it  	{lexprint(yytext, "IT", yylineno);}
 ")"    {lexprint(yytext, "CLOSING_PARENTHESIS", yylineno);}
 
 
-{ID}       {lexprint(yytext, "ID", yylineno);}
 {EXPONENT} {lexprint(yytext, "EXPONENT", yylineno);}
 {INT_10}   {lexprint(yytext, "INT_10", yylineno);}
 {INT_16}   {lexprint(yytext, "INT_16", yylineno);}
 {INT_8}	   {lexprint(yytext, "INT_8", yylineno);}
 {INT_2}	   {lexprint(yytext, "INT_2", yylineno);}
 {REAL}[^.] {lexprint(yytext, "REAL", yylineno);}
-
+{ID}       {lexprint(yytext, "ID", yylineno);}
 
 \/\*            { str[0]=0; BEGIN(MLCOMMENT); }
 <MLCOMMENT>\t     { strcat(str,"\\t");}
