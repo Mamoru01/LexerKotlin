@@ -61,7 +61,7 @@ class MyClass (val a: Int, var b: String){
 |var|VAR|2|9|
 |b|ID|2|10|
 |:|NAME_TYPE_SEPARATOR|2|11|
-|String|ID|2|12|
+|String|TYPE_STRING|2|12|
 |)|CLOSING_PARENTHESIS|2|13|
 |{|OPENING_OPERATOR_BRACKET|2|14|
 |private|PRIVATE|3|15|
