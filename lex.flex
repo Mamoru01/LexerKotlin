@@ -9,7 +9,7 @@
 	#include <conio.h>
 	#include <locale.h> 
 
-        void lexprint(char * lexem, char  token[15], int line); 
+        void lexprint(char * lexem, char  token[], int line); 
 %}
 
 %x STRING
@@ -47,7 +47,7 @@ EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
         char str[100];
 	char idHeredoc[100];
 
-        void lexprint(char * lexem, char  token[15], int line){
+        void lexprint(char * lexem, char  token[], int line){
                 printf("%s\t%s\t%d\t%d\n", lexem, token, yylineno, count);
                 count++;
         }
