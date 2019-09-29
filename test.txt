@@ -1,5 +1,5 @@
-import foo.Bar // Bar äîñòóïåí
-import bar.Bar as bBar // bBar çàìåíÿåò èìÿ 'bar.Bar'
+ï»¿import foo.Bar // Bar Ð´Ð¾ÑÑ‚ÑƒÐ¿ÐµÐ½
+import bar.Bar as bBar // bBar Ð·Ð°Ð¼ÐµÐ½ÑÐµÑ‚ Ð¸Ð¼Ñ 'bar.Bar'
 
 interface A {
     fun foo() { print("A") }
@@ -50,7 +50,7 @@ class MyClass (val a: Int, var b: String, var f: Float, var q: String{
  		print(item)
 	do {
   		val y = retrieveData()
-	} while (y != null) // y çäåñü äîñòóïíî!
+	} while (y != null) // y Ð·Ð´ÐµÑÑŒ Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾!
     }
 
     init {
@@ -58,16 +58,16 @@ class MyClass (val a: Int, var b: String, var f: Float, var q: String{
         when (x) {
         	1 -> print("x == 1")
         	2 -> print("x == 2")
-          else -> { // îáðàòèòå âíèìàíèå íà áëîê
+          else -> { // Ð¾Ð±Ñ€Ð°Ñ‚Ð¸Ñ‚Ðµ Ð²Ð½Ð¸Ð¼Ð°Ð½Ð¸Ðµ Ð½Ð° Ð±Ð»Ð¾Ðº
         	print("x is neither 1 nor 2")
         }
         }
         val max = if (a > b) { 
-        	print("âîçâðàùàåì a") 
+        	print("Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÐ¼ a") 
         	a 
         } 
         else { 
-        	print("âîçâðàùàåì b") 
+        	print("Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÐ¼ b") 
         	b 
         }
         if (max >100)
