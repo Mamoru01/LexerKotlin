@@ -34,7 +34,7 @@ class MyClass (val a: Int, var b: String, var f: Float, var q: String{
     
     private val x: IntArray = intArrayOf(1, 2, 3)
     x[0] = x[1] + x[2]
-    private lateinit var str: String = "Hello, world!\n";
+    private lateinit var str: String = "Hello, world!";
     
     //Test
     public val oneMillion: Int = 1_000_000
