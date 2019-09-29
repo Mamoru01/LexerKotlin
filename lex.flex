@@ -265,7 +265,6 @@ Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 
 void main(int argc, char **argv ){
 	freopen("LexemTable.tsv", "w", stdout);
-	freopen("err.log", "w", stderr);
 
         if (argc > 0){yyin = fopen( argv[1], "r" );} else yyin = stdin;
         
