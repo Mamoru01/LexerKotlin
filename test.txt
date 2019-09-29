@@ -5,6 +5,7 @@ class MyClass (val a: Int, var b: String, var f: Float, var q: Int){
         f = 2.7182818284
         f = 1.23456e-65
 	    q = 0x0f
+            q = 0b11010010_01101001
         return a + c[123];
     }
 

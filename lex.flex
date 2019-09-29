@@ -9,8 +9,9 @@
     #include <conio.h>
     #include <locale.h>
 
-        void lexprint(char * lexem, char  token[], int line);
-        void squeeze (char str[], char symbol);
+        void lexprint(char* lexem, char  token[], int line);
+        void squeeze (char* str, char symbol);
+        int binaryToDecimal(char* strBin);
 %}
 
 %x STRING
@@ -51,7 +52,7 @@ EXPONENT        (({INT_10}|{REAL})e[+-]?{NUM})
                 count++;
         }
 
-        void squeeze (char str[], char symbol) { 
+        void squeeze (char* str, char symbol) {
 
                 int i, j; 
 
@@ -59,6 +60,26 @@ EXPONENT        (({INT_10}|{REAL})e[+-]?{NUM})
                         if (str[i] != symbol) 
                                 str[j++] = str[i]; 
                 str[j] = '\0'; 
+        }
+
+        // Function to convert binary to decimal
+        int binaryToDecimal(char* strBin)
+        {
+            char strBufer[100] = {0};
+            strcpy(strBufer, strBin);
+            int dec_value = 0;
+
+            // Initializing base value to 1, i.e 2^0
+            int base = 1;
+
+            int len = strlen(strBufer);
+            for (int i = len - 1; i > 1; i--) {
+                if (strBufer[i] == '1')
+                    dec_value += base;
+                base = base * 2;
+            }
+
+            return dec_value;
         }
 
 %}
@@ -169,7 +190,7 @@ Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 {REAL}[^.]  {squeeze(yytext, '_');  printf("%f\t%s\t%d\t%d\n",atof(yytext), "REAL", yylineno, count); count++;}
 {INT_10}    {squeeze(yytext, '_');  printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_10", yylineno, count); count++;}
 {INT_16}    {squeeze(yytext, '_');  int n16; sscanf(yytext,"%i", &n16); printf("%i\t%s\t%d\t%d\n", n16, "INT_16", yylineno, count); count++;}
-{INT_2}     {squeeze(yytext, '_');  printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_2", yylineno, count); count++;}
+{INT_2}     {squeeze(yytext, '_');  printf("%d\t%s\t%d\t%d\n",binaryToDecimal(yytext), "INT_2", yylineno, count); count++;}
 {ID}        {lexprint(yytext, "ID", yylineno);}
 
 
