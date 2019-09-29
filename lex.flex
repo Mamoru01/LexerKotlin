@@ -10,6 +10,7 @@
     #include <locale.h>
 
         void lexprint(char * lexem, char  token[], int line);
+        void squeeze (char str[], char symbol);
 %}
 
 %x STRING
@@ -28,8 +29,8 @@ D8              [0-7]
 D_8             [_0-7]
 D10             [0-9]
 D_10            [_0-9]
-D16             [0-9a-f]
-D_16            [_0-9a-f]
+D16             [0-9a-fA-F]
+D_16            [_0-9a-fA-F]
 
 INT_16          0x({D16}{D_16}*)?{D16}
 INT_10          ({D10}{D_10}*)?{D10}
@@ -49,6 +50,17 @@ EXPONENT        (({INT_10}|{REAL})e[+-]?{NUM})
                 printf("%s\t%s\t%d\t%d\n", lexem, token, yylineno, count);
                 count++;
         }
+
+        void squeeze (char str[], char symbol) { 
+
+                int i, j; 
+
+                for (i = j = 0; str[i] != '\0'; i++) 
+                        if (str[i] != symbol) 
+                                str[j++] = str[i]; 
+                str[j] = '\0'; 
+        }
+
 %}
 %% 
 
@@ -153,11 +165,11 @@ ShortArray  {lexprint(yytext, "TYPE_SHORTARRAY", yylineno);}
 Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 
 
-{EXPONENT}  {printf("%e\t%s\t%d\t%d\n",atoll(yytext), "EXPONENT", yylineno, count); count++;}
-{REAL}[^.]  {printf("%f\t%s\t%d\t%d\n",atof(yytext), "REAL", yylineno, count); count++;}
-{INT_10}    {printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_10", yylineno, count); count++;}
-{INT_16}    {int n16; sscanf(yytext,"%i", &n16); printf("%i\t%s\t%d\t%d\n", n16, "INT_16", yylineno, count); count++;}
-{INT_2}     {printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_2", yylineno, count); count++;}
+{EXPONENT}  {squeeze(yytext, '_');  printf("%e\t%s\t%d\t%d\n",atoll(yytext), "EXPONENT", yylineno, count); count++;}
+{REAL}[^.]  {squeeze(yytext, '_');  printf("%f\t%s\t%d\t%d\n",atof(yytext), "REAL", yylineno, count); count++;}
+{INT_10}    {squeeze(yytext, '_');  printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_10", yylineno, count); count++;}
+{INT_16}    {squeeze(yytext, '_');  int n16; sscanf(yytext,"%i", &n16); printf("%i\t%s\t%d\t%d\n", n16, "INT_16", yylineno, count); count++;}
+{INT_2}     {squeeze(yytext, '_');  printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_2", yylineno, count); count++;}
 {ID}        {lexprint(yytext, "ID", yylineno);}
 
 
