@@ -156,7 +156,7 @@ Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 {EXPONENT}  {printf("%e\t%s\t%d\t%d\n",atoll(yytext), "EXPONENT", yylineno, count); count++;}
 {REAL}[^.]  {printf("%f\t%s\t%d\t%d\n",atof(yytext), "REAL", yylineno, count); count++;}
 {INT_10}    {printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_10", yylineno, count); count++;}
-{INT_16}    {printf("%х\t%s\t%d\t%d\n",atoi(yytext), "INT_16", yylineno, count); count++;}
+{INT_16}    {int n16; sscanf(yytext,"%i", &n16); printf("%i\t%s\t%d\t%d\n", n16, "INT_16", yylineno, count); count++;}
 {INT_2}     {printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_2", yylineno, count); count++;}
 {ID}        {lexprint(yytext, "ID", yylineno);}
 
