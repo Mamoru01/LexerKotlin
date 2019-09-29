@@ -1,8 +1,11 @@
-class MyClass (val a: Int, var b: String){
+class MyClass (val a: Int, var b: String, var f: Float, var q: Int){
     private val c = intArrayOf(2,0,1,9);
     private lateinit var str: String
     fun someFun(): Int {
-        return a + c[1];
+        f = 2.7182818284
+        f = 1.23456e-65
+	    q = 0x0f
+        return a + c[123];
     }
 
     init {

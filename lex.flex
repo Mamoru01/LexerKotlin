@@ -33,11 +33,9 @@ D_16            [_0-9a-f]
 
 INT_16          0x({D16}{D_16}*)?{D16}
 INT_10          ({D10}{D_10}*)?{D10}
-INT_8           0c({D8}{D_8}*)?{D8}
 INT_2           0b({D2}{D_2}*)?{D2}
 
 NUM             [0-9]+
-REAL_0          (([0-9]*[\.]{NUM})|({NUM}[\.][0-9]*))
 REAL            ((({INT_10})?[\.]{INT_10})|({INT_10}[\.]({INT_10})?))
 EXPONENT        (({INT_10}|{REAL})e[+-]?{NUM})
 
@@ -155,12 +153,11 @@ ShortArray  {lexprint(yytext, "TYPE_SHORTARRAY", yylineno);}
 Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 
 
-{EXPONENT}  {lexprint(yytext, "EXPONENT", yylineno);}
-{INT_10}    {lexprint(yytext, "INT_10", yylineno);}
-{INT_16}    {lexprint(yytext, "INT_16", yylineno);}
-{INT_8}     {lexprint(yytext, "INT_8", yylineno);}
-{INT_2}     {lexprint(yytext, "INT_2", yylineno);}
-{REAL}[^.]  {lexprint(yytext, "REAL", yylineno);}
+{EXPONENT}  {printf("%e\t%s\t%d\t%d\n",atoll(yytext), "EXPONENT", yylineno, count); count++;}
+{REAL}[^.]  {printf("%f\t%s\t%d\t%d\n",atof(yytext), "REAL", yylineno, count); count++;}
+{INT_10}    {printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_10", yylineno, count); count++;}
+{INT_16}    {printf("%х\t%s\t%d\t%d\n",atoi(yytext), "INT_16", yylineno, count); count++;}
+{INT_2}     {printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_2", yylineno, count); count++;}
 {ID}        {lexprint(yytext, "ID", yylineno);}
 
 
