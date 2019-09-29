@@ -1,17 +1,79 @@
-class MyClass (val a: Int, var b: String, var f: Float, var q: Int){
-    private val c = intArrayOf(2,0,1,9);
-    private lateinit var str: String
+import foo.Bar // Bar доступен
+import bar.Bar as bBar // bBar заменяет имя 'bar.Bar'
+
+interface A {
+    fun foo() { print("A") }
+    fun bar()
+}
+
+interface B {
+    fun foo() { print("B") }
+    fun bar() { print("bar") }
+}
+
+class C : A {
+    override fun bar() { print("bar") }
+}
+
+class D : A, B {
+    override fun foo() {
+        super<A>.foo()
+        super<B>.foo()
+    }
+    
+    override fun bar() {
+        super<B>.bar()
+    }
+}
+
+/* Class name
+*  param
+*  return 
+*/
+class MyClass (val a: Int, var b: String, var f: Float, var q: String{
+    
+    private val x: IntArray = intArrayOf(1, 2, 3)
+    x[0] = x[1] + x[2]
+    private lateinit var str: String = "Hello, world!\n";
+    
+    //Test
+    public val oneMillion: Int = 1_000_000
+    protected val hexBytes: Int = 0xFF_EC
+    private val bytes: Int = 0b11010010_01101001
+
     fun someFun(): Int {
-        f = 2.7182818284
-        f = 1.23456e-65
-	    q = 0x0f
-            q = 0b11010010_01101001
+        f : Float = 2.7182818284
+        f : Float = 1.23456e-65
+	println (0x0f)
         return a + c[123];
+	for (item in collection)
+ 		print(item)
+	do {
+  		val y = retrieveData()
+	} while (y != null) // y здесь доступно!
     }
 
     init {
-        str = "sdf $b  faxs fasf $a sfas"
-	str = "$n"
-        someFun()
+        val x: Int = 5; 
+        when (x) {
+        	1 -> print("x == 1")
+        	2 -> print("x == 2")
+          else -> { // обратите внимание на блок
+        	print("x is neither 1 nor 2")
+        }
+        }
+        val max = if (a > b) { 
+        	print("возвращаем a") 
+        	a 
+        } 
+        else { 
+        	print("возвращаем b") 
+        	b 
+        }
+        if (max >100)
+        	str = "sdf $b  faxs fasf $a sfas"
+	else	
+        	str = "$n"
+        someFun();
     }
 }
