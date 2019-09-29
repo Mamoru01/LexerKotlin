@@ -109,32 +109,32 @@ where  	{lexprint(yytext, "WHERE", yylineno);}
 
 
 
-actual 	{lexprint(yytext, "ACTUAL", yylineno);}
+actual   	{lexprint(yytext, "ACTUAL", yylineno);}
 abstract 	{lexprint(yytext, "ABSTRACT", yylineno);}
-annotation  	{lexprint(yytext, "ANNOTATION", yylineno);}
+annotation  {lexprint(yytext, "ANNOTATION", yylineno);}
 companion  	{lexprint(yytext, "COMPANION", yylineno);}
-const  	        {lexprint(yytext, "CONST", yylineno);}
-crossinline  	{lexprint(yytext, "CROSSINLINE", yylineno);}
-data 	        {lexprint(yytext, "DATA", yylineno);}
-enum 	        {lexprint(yytext, "ENUM", yylineno);}
-expect 	        {lexprint(yytext, "EXPECT", yylineno);}
+const  	    {lexprint(yytext, "CONST", yylineno);}
+crossinline {lexprint(yytext, "CROSSINLINE", yylineno);}
+data 	    {lexprint(yytext, "DATA", yylineno);}
+enum 	    {lexprint(yytext, "ENUM", yylineno);}
+expect 	    {lexprint(yytext, "EXPECT", yylineno);}
 extrnal  	{lexprint(yytext, "EXTERNAL", yylineno);}
-final  	        {lexprint(yytext, "FINAL", yylineno);}
-infix  	        {lexprint(yytext, "INFIX", yylineno);}
-inline 	        {lexprint(yytext, "INLINE", yylineno);}
-inner 	        {lexprint(yytext, "INNER", yylineno);}
+final  	    {lexprint(yytext, "FINAL", yylineno);}
+infix  	    {lexprint(yytext, "INFIX", yylineno);}
+inline 	    {lexprint(yytext, "INLINE", yylineno);}
+inner 	    {lexprint(yytext, "INNER", yylineno);}
 internal  	{lexprint(yytext, "INTERNAL", yylineno);}
 lateinit  	{lexprint(yytext, "LATEINIT", yylineno);}
 noinline  	{lexprint(yytext, "NOINLINE", yylineno);}
-open  	        {lexprint(yytext, "OPEN", yylineno);}
+open  	    {lexprint(yytext, "OPEN", yylineno);}
 operator 	{lexprint(yytext, "OPERATOR", yylineno);}
-out 	        {lexprint(yytext, "OUT", yylineno);}
+out 	    {lexprint(yytext, "OUT", yylineno);}
 override  	{lexprint(yytext, "OVERRIDE", yylineno);}
 private  	{lexprint(yytext, "PRIVATE", yylineno);}
 protected  	{lexprint(yytext, "PROTECTED", yylineno);}
 public  	{lexprint(yytext, "PUBLIC", yylineno);}
 reified 	{lexprint(yytext, "REIFIED", yylineno);}
-sealed 	        {lexprint(yytext, "SEALED", yylineno);}
+sealed 	    {lexprint(yytext, "SEALED", yylineno);}
 suspend  	{lexprint(yytext, "SUSPEND", yylineno);}
 tailred  	{lexprint(yytext, "TAILRED", yylineno);}
 vararg  	{lexprint(yytext, "VARARG", yylineno);}
@@ -209,6 +209,21 @@ it  	{lexprint(yytext, "IT", yylineno);}
 "}"    {lexprint(yytext, "CLOSING_OPERATOR_BRACKET", yylineno);}
 "("    {lexprint(yytext, "OPENING_PARENTHESIS", yylineno);}
 ")"    {lexprint(yytext, "CLOSING_PARENTHESIS", yylineno);}
+
+
+"Double"    {lexprint(yytext, "TYPE_DOUBLE", yylineno);}
+"Float"     {lexprint(yytext, "TYPE_FLOAT", yylineno);}
+"Long"      {lexprint(yytext, "TYPE_LONG", yylineno);}
+"Int"       {lexprint(yytext, "TYPE_INT", yylineno);}
+"Short"     {lexprint(yytext, "TYPE_SHORT", yylineno);}
+"Byte"      {lexprint(yytext, "TYPE_BYTE", yylineno);}
+"String"    {lexprint(yytext, "TYPE_STRING", yylineno);}
+
+
+"IntArray"     {lexprint(yytext, "TYPE_INTARRAY", yylineno);}
+"ByteArray"    {lexprint(yytext, "TYPE_BYTEARRAY", yylineno);}
+"ShortArray"   {lexprint(yytext, "TYPE_SHORTARRAY", yylineno);}
+"Array"        {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 
 
 {EXPONENT} {lexprint(yytext, "EXPONENT", yylineno);}
