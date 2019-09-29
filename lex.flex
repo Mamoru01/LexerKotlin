@@ -3,13 +3,13 @@
 %option yylineno
 
 %{
-	#include <stdlib.h>
-	#include <stdio.h>
-	#include <string.h>
-	#include <conio.h>
-	#include <locale.h> 
+    #include <stdlib.h>
+    #include <stdio.h>
+    #include <string.h>
+    #include <conio.h>
+    #include <locale.h>
 
-        void lexprint(char * lexem, char  token[], int line); 
+        void lexprint(char * lexem, char  token[], int line);
 %}
 
 %x STRING
@@ -17,29 +17,29 @@
 %x MLCOMMENT
 %x LCOMMENT
 
-ID		[A-Za-z0-9\_]*
+ID              [A-Za-z0-9\_]*
 
-WHITESPACE [ \t\r]
-NEXTLINE [\n]
+WHITESPACE      [ \t\r]
+NEXTLINE        [\n]
 
-D2          	[01]
-D_2				[_01]
-D8          	[0-7]
-D_8          	[_0-7]
-D10          	[0-9]
-D_10          	[_0-9]
-D16				[0-9a-f]
-D_16			[_0-9a-f]
+D2              [01]
+D_2             [_01]
+D8              [0-7]
+D_8             [_0-7]
+D10             [0-9]
+D_10            [_0-9]
+D16             [0-9a-f]
+D_16            [_0-9a-f]
 
-INT_16 			0x({D16}{D_16}*)?{D16}
-INT_10 			  ({D10}{D_10}*)?{D10}
-INT_8 			0c({D8}{D_8}*)?{D8}
-INT_2 			0b({D2}{D_2}*)?{D2}
+INT_16          0x({D16}{D_16}*)?{D16}
+INT_10          ({D10}{D_10}*)?{D10}
+INT_8           0c({D8}{D_8}*)?{D8}
+INT_2           0b({D2}{D_2}*)?{D2}
 
-NUM          	[0-9]+
+NUM             [0-9]+
 REAL_0          (([0-9]*[\.]{NUM})|({NUM}[\.][0-9]*))
-REAL          	((({INT_10})?[\.]{INT_10})|({INT_10}[\.]({INT_10})?))
-EXPONENT	 	(({INT_10}|{REAL})e[+-]?{NUM})
+REAL            ((({INT_10})?[\.]{INT_10})|({INT_10}[\.]({INT_10})?))
+EXPONENT        (({INT_10}|{REAL})e[+-]?{NUM})
 
 
 %{
@@ -91,8 +91,8 @@ while       {lexprint(yytext, "WHILE", yylineno);}
 by          {lexprint(yytext, "BY", yylineno);}
 catch       {lexprint(yytext, "CATCH", yylineno);}
 constructor {lexprint(yytext, "CONSTRUCTOR", yylineno);}
-delegate  	{lexprint(yytext, "DELEGATE", yylineno);}
-dynamic  	{lexprint(yytext, "DYNAMIC", yylineno);}
+delegate    {lexprint(yytext, "DELEGATE", yylineno);}
+dynamic     {lexprint(yytext, "DYNAMIC", yylineno);}
 field       {lexprint(yytext, "FIELD", yylineno);}
 file        {lexprint(yytext, "FILE", yylineno);}
 finally     {lexprint(yytext, "FINALLY", yylineno);}
@@ -107,35 +107,35 @@ setparam    {lexprint(yytext, "SETPARAM", yylineno);}
 where       {lexprint(yytext, "WHERE", yylineno);}
 
 
-actual   	{lexprint(yytext, "ACTUAL", yylineno);}
-abstract 	{lexprint(yytext, "ABSTRACT", yylineno);}
+actual      {lexprint(yytext, "ACTUAL", yylineno);}
+abstract    {lexprint(yytext, "ABSTRACT", yylineno);}
 annotation  {lexprint(yytext, "ANNOTATION", yylineno);}
-companion  	{lexprint(yytext, "COMPANION", yylineno);}
+companion   {lexprint(yytext, "COMPANION", yylineno);}
 const  	    {lexprint(yytext, "CONST", yylineno);}
 crossinline {lexprint(yytext, "CROSSINLINE", yylineno);}
 data 	    {lexprint(yytext, "DATA", yylineno);}
 enum 	    {lexprint(yytext, "ENUM", yylineno);}
 expect 	    {lexprint(yytext, "EXPECT", yylineno);}
-extrnal  	{lexprint(yytext, "EXTERNAL", yylineno);}
+extrnal     {lexprint(yytext, "EXTERNAL", yylineno);}
 final  	    {lexprint(yytext, "FINAL", yylineno);}
 infix  	    {lexprint(yytext, "INFIX", yylineno);}
 inline 	    {lexprint(yytext, "INLINE", yylineno);}
 inner 	    {lexprint(yytext, "INNER", yylineno);}
-internal  	{lexprint(yytext, "INTERNAL", yylineno);}
-lateinit  	{lexprint(yytext, "LATEINIT", yylineno);}
-noinline  	{lexprint(yytext, "NOINLINE", yylineno);}
+internal    {lexprint(yytext, "INTERNAL", yylineno);}
+lateinit    {lexprint(yytext, "LATEINIT", yylineno);}
+noinline    {lexprint(yytext, "NOINLINE", yylineno);}
 open  	    {lexprint(yytext, "OPEN", yylineno);}
-operator 	{lexprint(yytext, "OPERATOR", yylineno);}
+operator    {lexprint(yytext, "OPERATOR", yylineno);}
 out 	    {lexprint(yytext, "OUT", yylineno);}
-override  	{lexprint(yytext, "OVERRIDE", yylineno);}
-private  	{lexprint(yytext, "PRIVATE", yylineno);}
-protected  	{lexprint(yytext, "PROTECTED", yylineno);}
-public  	{lexprint(yytext, "PUBLIC", yylineno);}
-reified 	{lexprint(yytext, "REIFIED", yylineno);}
-sealed 	    {lexprint(yytext, "SEALED", yylineno);}
-suspend  	{lexprint(yytext, "SUSPEND", yylineno);}
-tailred  	{lexprint(yytext, "TAILRED", yylineno);}
-vararg  	{lexprint(yytext, "VARARG", yylineno);}
+override    {lexprint(yytext, "OVERRIDE", yylineno);}
+private     {lexprint(yytext, "PRIVATE", yylineno);}
+protected   {lexprint(yytext, "PROTECTED", yylineno);}
+public      {lexprint(yytext, "PUBLIC", yylineno);}
+reified     {lexprint(yytext, "REIFIED", yylineno);}
+sealed      {lexprint(yytext, "SEALED", yylineno);}
+suspend     {lexprint(yytext, "SUSPEND", yylineno);}
+tailred     {lexprint(yytext, "TAILRED", yylineno);}
+vararg      {lexprint(yytext, "VARARG", yylineno);}
 field       {lexprint(yytext, "FIELD", yylineno);}
 it          {lexprint(yytext, "IT", yylineno);}
 
