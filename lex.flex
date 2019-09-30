@@ -229,8 +229,9 @@ Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 <SYMBOL>\\e          {strcat(str,"\e");}
 <SYMBOL>\\f          {strcat(str,"\f");}
 <SYMBOL>\\$          {strcat(str,"\$");}
-<SYMBOL>[^\\\'\n]+   {strcat(str,yytext);}
-<SYMBOL>\'           {lexprint(str, "SYMBOL", yylineno); BEGIN(INITIAL);}
+<SYMBOL>[^\\\'\n]    {strcat(str,yytext);}
+<SYMBOL>\'           {if(strlen(str) == 1) {lexprint(str, "SYMBOL", yylineno);}else {fprintf(stderr, "Too many characters in a character literal \'\'%s\'\' in %d line \n", str, yylineno); str[0] = 0;} BEGIN(INITIAL);}
+<SYMBOL>[^"\n]\n     {strcat(str,yytext); fprintf(stderr, "%s Expecting \' in %d line \n", str, yylineno); str[0] = 0; BEGIN(INITIAL);}
 
 
 \"                   {str[0]=0; BEGIN(STRING);}
@@ -251,8 +252,8 @@ Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
                       str[0]=0;
 }
 <STRING>[^\\\"\n]    {strcat(str,yytext);}
-<STRING>\n           {fprintf(stderr, "%s Not Found in %d line \n", str, yylineno);BEGIN(INITIAL);}
 <STRING>\"           {lexprint(str, "STRING", yylineno); BEGIN(INITIAL);}
+<STRING>[^"\n]*\n    {strcat(str,yytext);fprintf(stderr, "%s Expecting \" in %d line \n", str, yylineno); str[0] = 0; BEGIN(INITIAL);}
 
 
 .                    {fprintf(stderr, "%s Not Found in %d line \n", yytext, yylineno);}
