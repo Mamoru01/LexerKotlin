@@ -150,11 +150,11 @@ ShortArray  {lexprint(yytext, "TYPE_SHORTARRAY", yylineno);}
 Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 
 
-{EXPONENT}  {squeeze(yytext, '_');  printf("%e\t%s\t%d\t%d\n",atoll(yytext), "EXPONENT", yylineno, count); count++;}
-{REAL}[^.]  {squeeze(yytext, '_');  printf("%f\t%s\t%d\t%d\n",atof(yytext), "REAL", yylineno, count); count++;}
-{INT_10}    {squeeze(yytext, '_');  printf("%d\t%s\t%d\t%d\n",atoi(yytext), "INT_10", yylineno, count); count++;}
-{INT_16}    {squeeze(yytext, '_');  int n16; sscanf(yytext,"%i", &n16); printf("%i\t%s\t%d\t%d\n", n16, "INT_16", yylineno, count); count++;}
-{INT_2}     {squeeze(yytext, '_');  printf("%d\t%s\t%d\t%d\n",binaryToDecimal(yytext), "INT_2", yylineno, count); count++;}
+{EXPONENT}  {strcpy(str,yytext); squeeze(str, '_');  printf("%e\t%s\t%d\t%d\n",atoll(str), "EXPONENT", yylineno, count); count++; str[0] = 0;}
+{REAL}[^.]  {strcpy(str,yytext); squeeze(str, '_');  printf("%f\t%s\t%d\t%d\n",atof(str), "REAL", yylineno, count); count++; str[0] = 0;}
+{INT_10}    {strcpy(str,yytext); squeeze(str, '_');  printf("%d\t%s\t%d\t%d\n",atoi(str), "INT_10", yylineno, count); count++; str[0] = 0;}
+{INT_16}    {strcpy(str,yytext); squeeze(str, '_');  int n16; sscanf(str,"%i", &n16); printf("%i\t%s\t%d\t%d\n", n16, "INT_16", yylineno, count); count++; str[0] = 0;}
+{INT_2}     {strcpy(str,yytext); squeeze(str, '_');  printf("%d\t%s\t%d\t%d\n",binaryToDecimal(str), "INT_2", yylineno, count); count++; str[0] = 0;}
 {ID}        {lexprint(yytext, "ID", yylineno);}
 
 
@@ -251,6 +251,7 @@ Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
                       str[0]=0;
 }
 <STRING>[^\\\"\n]    {strcat(str,yytext);}
+<STRING>\n           {fprintf(stderr, "%s Not Found in %d line \n", str, yylineno);BEGIN(INITIAL);}
 <STRING>\"           {lexprint(str, "STRING", yylineno); BEGIN(INITIAL);}
 
 
