@@ -41,51 +41,15 @@ NUM             [0-9]+
 REAL            ((({INT_10})?[\.]{INT_10})|({INT_10}[\.]({INT_10})?))
 EXPONENT        (({INT_10}|{REAL})e[+-]?{NUM})
 
-
 %{
 	int count = 0; 
         char str[100];
 	char idHeredoc[100];
 
-        void lexprint(char * lexem, char  token[], int line){
-                printf("%s\t%s\t%d\t%d\n", lexem, token, yylineno, count);
-                count++;
-        }
-
-        void squeeze (char* str, char symbol) {
-
-                int i, j; 
-
-                for (i = j = 0; str[i] != '\0'; i++) 
-                        if (str[i] != symbol) 
-                                str[j++] = str[i]; 
-                str[j] = '\0'; 
-        }
-
-        // Function to convert binary to decimal
-        int binaryToDecimal(char* strBin)
-        {
-            char strBufer[100] = {0};
-            strcpy(strBufer, strBin);
-            int dec_value = 0;
-
-            // Initializing base value to 1, i.e 2^0
-            int base = 1;
-
-            int len = strlen(strBufer);
-            for (int i = len - 1; i > 1; i--) {
-                if (strBufer[i] == '1')
-                    dec_value += base;
-                base = base * 2;
-            }
-
-            return dec_value;
-        }
-
+ 
 %}
-%% 
 
-
+%%
 
 as          {lexprint(yytext, "AS", yylineno);}
 as\?        {lexprint(yytext, "AS?", yylineno);}
@@ -305,3 +269,37 @@ void main(int argc, char **argv ){
         yylex();
         return;
 }
+
+void lexprint(char * lexem, char  token[], int line){
+        printf("%s\t%s\t%d\t%d\n", lexem, token, yylineno, count);
+        count++;
+}
+
+void squeeze (char* str, char symbol) {
+
+        int i, j; 
+
+        for (i = j = 0; str[i] != '\0'; i++) 
+                if (str[i] != symbol) 
+                        str[j++] = str[i]; 
+        str[j] = '\0'; 
+}
+
+// Function to convert binary to decimal
+int binaryToDecimal(char* strBin)
+{
+        char strBufer[100] = {0};
+        strcpy(strBufer, strBin);
+        int dec_value = 0;
+        // Initializing base value to 1, i.e 2^0
+        int base = 1;
+        int len = strlen(strBufer);
+        for (int i = len - 1; i > 1; i--) {
+                if (strBufer[i] == '1')
+                    dec_value += base;
+                base = base * 2;
+        }
+
+        return dec_value;
+}
+
