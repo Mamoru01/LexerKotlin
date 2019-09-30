@@ -249,7 +249,6 @@ Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 
 \/\/                 {str[0]=0; BEGIN(LCOMMENT);}
 <LCOMMENT>\n         {lexprint(str, "LCOMMENT", yylineno); BEGIN(INITIAL);}
-<LCOMMENT>\w         {strcat(str,yytext);}
 
 
 {WHITESPACE}+        {/* skip {WHITESPACE} */}
