@@ -9,8 +9,8 @@
     #include <conio.h>
     #include <locale.h>
 
-        void lexprint(char* lexem, char  token[], int line);
-        void squeeze (char* str, char symbol);
+        voidlexprint(char* lexem, char  token[], int line, int *count);
+        voidsqueeze (char* str, char symbol);
         int binaryToDecimal(char* strBin);
 %}
 
@@ -41,113 +41,113 @@ NUM             [0-9]+
 REAL            ((({INT_10})?[\.]{INT_10})|({INT_10}[\.]({INT_10})?))
 EXPONENT        (({INT_10}|{REAL})e[+-]?{NUM})
 
-%{
-	int count = 0; 
-        char str[100];
-	char idHeredoc[100];
 
- 
-%}
 
 %%
 
-as          {lexprint(yytext, "AS", yylineno);}
-as\?        {lexprint(yytext, "AS?", yylineno);}
-break       {lexprint(yytext, "BREAK", yylineno);}
-class       {lexprint(yytext, "CLASS", yylineno);}
-continue    {lexprint(yytext, "continue", yylineno);}
-do          {lexprint(yytext, "DO", yylineno);}
-else        {lexprint(yytext, "ELSE", yylineno);}
-false       {lexprint(yytext, "FALSE", yylineno);}
-for         {lexprint(yytext, "FOR", yylineno);}
-fun         {lexprint(yytext, "FUN", yylineno);}
-if          {lexprint(yytext, "IF", yylineno);}
-in          {lexprint(yytext, "IN", yylineno);}
-\!in        {lexprint(yytext, "NOIN", yylineno);}
-interface   {lexprint(yytext, "INTERFACE", yylineno);}
-is          {lexprint(yytext, "IS", yylineno);}
-\!is        {lexprint(yytext, "NOIS", yylineno);}
-null        {lexprint(yytext, "NULL", yylineno);}
-object      {lexprint(yytext, "OBJECT", yylineno);}
-package     {lexprint(yytext, "PACKAGE", yylineno);}
-return      {lexprint(yytext, "RETURN", yylineno);}
-super       {lexprint(yytext, "SUPER", yylineno);}
-this        {lexprint(yytext, "THIS", yylineno);}
-throw       {lexprint(yytext, "THROW", yylineno);}
-true        {lexprint(yytext, "TRUE", yylineno);}
-try         {lexprint(yytext, "TRY", yylineno);}
-typealias   {lexprint(yytext, "TYPEALIAS", yylineno);}
-val         {lexprint(yytext, "VAL", yylineno);}
-var         {lexprint(yytext, "VAR", yylineno);}
-when        {lexprint(yytext, "WHEN", yylineno);}
-while       {lexprint(yytext, "WHILE", yylineno);}
+%{
+	int count = 1;
+    char str[100];
+	char idHeredoc[100];
+%}
+
+as          {lexprint(yytext, "AS", yylineno, &count);}
+as\?        {lexprint(yytext, "AS?", yylineno, &count);}
+break       {lexprint(yytext, "BREAK", yylineno, &count);}
+class       {lexprint(yytext, "CLASS", yylineno, &count);}
+continue    {lexprint(yytext, "continue", yylineno, &count);}
+do          {lexprint(yytext, "DO", yylineno, &count);}
+else        {lexprint(yytext, "ELSE", yylineno, &count);}
+false       {lexprint(yytext, "FALSE", yylineno, &count);}
+for         {lexprint(yytext, "FOR", yylineno, &count);}
+fun         {lexprint(yytext, "FUN", yylineno, &count);}
+if          {lexprint(yytext, "IF", yylineno, &count);}
+in          {lexprint(yytext, "IN", yylineno, &count);}
+\!in        {lexprint(yytext, "NOIN", yylineno, &count);}
+interface   {lexprint(yytext, "INTERFACE", yylineno, &count);}
+is          {lexprint(yytext, "IS", yylineno, &count);}
+\!is        {lexprint(yytext, "NOIS", yylineno, &count);}
+null        {lexprint(yytext, "NULL", yylineno, &count);}
+object      {lexprint(yytext, "OBJECT", yylineno, &count);}
+package     {lexprint(yytext, "PACKAGE", yylineno, &count);}
+return      {lexprint(yytext, "RETURN", yylineno, &count);}
+super       {lexprint(yytext, "SUPER", yylineno, &count);}
+this        {lexprint(yytext, "THIS", yylineno, &count);}
+throw       {lexprint(yytext, "THROW", yylineno, &count);}
+true        {lexprint(yytext, "TRUE", yylineno, &count);}
+try         {lexprint(yytext, "TRY", yylineno, &count);}
+typealias   {lexprint(yytext, "TYPEALIAS", yylineno, &count);}
+val         {lexprint(yytext, "VAL", yylineno, &count);}
+var         {lexprint(yytext, "VAR", yylineno, &count);}
+when        {lexprint(yytext, "WHEN", yylineno, &count);}
+while       {lexprint(yytext, "WHILE", yylineno, &count);}
 
 
-by          {lexprint(yytext, "BY", yylineno);}
-catch       {lexprint(yytext, "CATCH", yylineno);}
-constructor {lexprint(yytext, "CONSTRUCTOR", yylineno);}
-delegate    {lexprint(yytext, "DELEGATE", yylineno);}
-dynamic     {lexprint(yytext, "DYNAMIC", yylineno);}
-field       {lexprint(yytext, "FIELD", yylineno);}
-file        {lexprint(yytext, "FILE", yylineno);}
-finally     {lexprint(yytext, "FINALLY", yylineno);}
-get         {lexprint(yytext, "GET", yylineno);}
-import      {lexprint(yytext, "IMPORT", yylineno);}
-init        {lexprint(yytext, "INIT", yylineno);}
-param       {lexprint(yytext, "PARAM", yylineno);}
-property    {lexprint(yytext, "PROPERTY", yylineno);}
-receiver    {lexprint(yytext, "RECEIVER", yylineno);}
-set         {lexprint(yytext, "SET", yylineno);}
-setparam    {lexprint(yytext, "SETPARAM", yylineno);}
-where       {lexprint(yytext, "WHERE", yylineno);}
+by          {lexprint(yytext, "BY", yylineno, &count);}
+catch       {lexprint(yytext, "CATCH", yylineno, &count);}
+constructor {lexprint(yytext, "CONSTRUCTOR", yylineno, &count);}
+delegate    {lexprint(yytext, "DELEGATE", yylineno, &count);}
+dynamic     {lexprint(yytext, "DYNAMIC", yylineno, &count);}
+field       {lexprint(yytext, "FIELD", yylineno, &count);}
+file        {lexprint(yytext, "FILE", yylineno, &count);}
+finally     {lexprint(yytext, "FINALLY", yylineno, &count);}
+get         {lexprint(yytext, "GET", yylineno, &count);}
+import      {lexprint(yytext, "IMPORT", yylineno, &count);}
+init        {lexprint(yytext, "INIT", yylineno, &count);}
+param       {lexprint(yytext, "PARAM", yylineno, &count);}
+property    {lexprint(yytext, "PROPERTY", yylineno, &count);}
+receiver    {lexprint(yytext, "RECEIVER", yylineno, &count);}
+set         {lexprint(yytext, "SET", yylineno, &count);}
+setparam    {lexprint(yytext, "SETPARAM", yylineno, &count);}
+where       {lexprint(yytext, "WHERE", yylineno, &count);}
 
 
-actual      {lexprint(yytext, "ACTUAL", yylineno);}
-abstract    {lexprint(yytext, "ABSTRACT", yylineno);}
-annotation  {lexprint(yytext, "ANNOTATION", yylineno);}
-companion   {lexprint(yytext, "COMPANION", yylineno);}
-const  	    {lexprint(yytext, "CONST", yylineno);}
-crossinline {lexprint(yytext, "CROSSINLINE", yylineno);}
-data 	    {lexprint(yytext, "DATA", yylineno);}
-enum 	    {lexprint(yytext, "ENUM", yylineno);}
-expect 	    {lexprint(yytext, "EXPECT", yylineno);}
-extrnal     {lexprint(yytext, "EXTERNAL", yylineno);}
-final  	    {lexprint(yytext, "FINAL", yylineno);}
-infix  	    {lexprint(yytext, "INFIX", yylineno);}
-inline 	    {lexprint(yytext, "INLINE", yylineno);}
-inner 	    {lexprint(yytext, "INNER", yylineno);}
-internal    {lexprint(yytext, "INTERNAL", yylineno);}
-lateinit    {lexprint(yytext, "LATEINIT", yylineno);}
-noinline    {lexprint(yytext, "NOINLINE", yylineno);}
-open  	    {lexprint(yytext, "OPEN", yylineno);}
-operator    {lexprint(yytext, "OPERATOR", yylineno);}
-out 	    {lexprint(yytext, "OUT", yylineno);}
-override    {lexprint(yytext, "OVERRIDE", yylineno);}
-private     {lexprint(yytext, "PRIVATE", yylineno);}
-protected   {lexprint(yytext, "PROTECTED", yylineno);}
-public      {lexprint(yytext, "PUBLIC", yylineno);}
-reified     {lexprint(yytext, "REIFIED", yylineno);}
-sealed      {lexprint(yytext, "SEALED", yylineno);}
-suspend     {lexprint(yytext, "SUSPEND", yylineno);}
-tailred     {lexprint(yytext, "TAILRED", yylineno);}
-vararg      {lexprint(yytext, "VARARG", yylineno);}
-field       {lexprint(yytext, "FIELD", yylineno);}
-it          {lexprint(yytext, "IT", yylineno);}
+actual      {lexprint(yytext, "ACTUAL", yylineno, &count);}
+abstract    {lexprint(yytext, "ABSTRACT", yylineno, &count);}
+annotation  {lexprint(yytext, "ANNOTATION", yylineno, &count);}
+companion   {lexprint(yytext, "COMPANION", yylineno, &count);}
+const  	    {lexprint(yytext, "CONST", yylineno, &count);}
+crossinline {lexprint(yytext, "CROSSINLINE", yylineno, &count);}
+data 	    {lexprint(yytext, "DATA", yylineno, &count);}
+enum 	    {lexprint(yytext, "ENUM", yylineno, &count);}
+expect 	    {lexprint(yytext, "EXPECT", yylineno, &count);}
+extrnal     {lexprint(yytext, "EXTERNAL", yylineno, &count);}
+final  	    {lexprint(yytext, "FINAL", yylineno, &count);}
+infix  	    {lexprint(yytext, "INFIX", yylineno, &count);}
+inline 	    {lexprint(yytext, "INLINE", yylineno, &count);}
+inner 	    {lexprint(yytext, "INNER", yylineno, &count);}
+internal    {lexprint(yytext, "INTERNAL", yylineno, &count);}
+lateinit    {lexprint(yytext, "LATEINIT", yylineno, &count);}
+noinline    {lexprint(yytext, "NOINLINE", yylineno, &count);}
+open  	    {lexprint(yytext, "OPEN", yylineno, &count);}
+operator    {lexprint(yytext, "OPERATOR", yylineno, &count);}
+out 	    {lexprint(yytext, "OUT", yylineno, &count);}
+override    {lexprint(yytext, "OVERRIDE", yylineno, &count);}
+private     {lexprint(yytext, "PRIVATE", yylineno, &count);}
+protected   {lexprint(yytext, "PROTECTED", yylineno, &count);}
+public      {lexprint(yytext, "PUBLIC", yylineno, &count);}
+reified     {lexprint(yytext, "REIFIED", yylineno, &count);}
+sealed      {lexprint(yytext, "SEALED", yylineno, &count);}
+suspend     {lexprint(yytext, "SUSPEND", yylineno, &count);}
+tailred     {lexprint(yytext, "TAILRED", yylineno, &count);}
+vararg      {lexprint(yytext, "VARARG", yylineno, &count);}
+field       {lexprint(yytext, "FIELD", yylineno, &count);}
+it          {lexprint(yytext, "IT", yylineno, &count);}
 
 
-Double      {lexprint(yytext, "TYPE_DOUBLE", yylineno);}
-Float       {lexprint(yytext, "TYPE_FLOAT", yylineno);}
-Long        {lexprint(yytext, "TYPE_LONG", yylineno);}
-Int         {lexprint(yytext, "TYPE_INT", yylineno);}
-Short       {lexprint(yytext, "TYPE_SHORT", yylineno);}
-Byte        {lexprint(yytext, "TYPE_BYTE", yylineno);}
-String      {lexprint(yytext, "TYPE_STRING", yylineno);}
+Double      {lexprint(yytext, "TYPE_DOUBLE", yylineno, &count);}
+Float       {lexprint(yytext, "TYPE_FLOAT", yylineno, &count);}
+Long        {lexprint(yytext, "TYPE_LONG", yylineno, &count);}
+Int         {lexprint(yytext, "TYPE_INT", yylineno, &count);}
+Short       {lexprint(yytext, "TYPE_SHORT", yylineno, &count);}
+Byte        {lexprint(yytext, "TYPE_BYTE", yylineno, &count);}
+String      {lexprint(yytext, "TYPE_STRING", yylineno, &count);}
 
 
-IntArray    {lexprint(yytext, "TYPE_INTARRAY", yylineno);}
-ByteArray   {lexprint(yytext, "TYPE_BYTEARRAY", yylineno);}
-ShortArray  {lexprint(yytext, "TYPE_SHORTARRAY", yylineno);}
-Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
+IntArray    {lexprint(yytext, "TYPE_INTARRAY", yylineno, &count);}
+ByteArray   {lexprint(yytext, "TYPE_BYTEARRAY", yylineno, &count);}
+ShortArray  {lexprint(yytext, "TYPE_SHORTARRAY", yylineno, &count);}
+Array       {lexprint(yytext, "TYPE_ARRAY", yylineno, &count);}
 
 
 {EXPONENT}  {strcpy(str,yytext); squeeze(str, '_');  printf("%e\t%s\t%d\t%d\n",atoll(str), "EXPONENT", yylineno, count); count++; str[0] = 0;}
@@ -155,64 +155,64 @@ Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 {INT_10}    {strcpy(str,yytext); squeeze(str, '_');  printf("%d\t%s\t%d\t%d\n",atoi(str), "INT_10", yylineno, count); count++; str[0] = 0;}
 {INT_16}    {strcpy(str,yytext); squeeze(str, '_');  int n16; sscanf(str,"%i", &n16); printf("%i\t%s\t%d\t%d\n", n16, "INT_16", yylineno, count); count++; str[0] = 0;}
 {INT_2}     {strcpy(str,yytext); squeeze(str, '_');  printf("%d\t%s\t%d\t%d\n",binaryToDecimal(str), "INT_2", yylineno, count); count++; str[0] = 0;}
-{ID}        {lexprint(yytext, "ID", yylineno);}
+{ID}        {lexprint(yytext, "ID", yylineno, &count);}
 
 
-"+"         {lexprint(yytext, "SUM", yylineno);}
-"-"         {lexprint(yytext, "MINUS", yylineno);}
-"*"         {lexprint(yytext, "MULTIPLY", yylineno);}
-"/"         {lexprint(yytext, "DIV", yylineno);}
-"%"         {lexprint(yytext, "MOD", yylineno);}
-"="         {lexprint(yytext, "ASSIGN", yylineno);}
-"+="        {lexprint(yytext, "SUM_ASSIGN", yylineno);}
-"-="        {lexprint(yytext, "MINUS_ASSIGN", yylineno);}
-"*="        {lexprint(yytext, "MULTIPLY_ASSIGN", yylineno);}
-"/="        {lexprint(yytext, "DIV_ASSIGN", yylineno);}
-"%="        {lexprint(yytext, "MOD_ASSIGN", yylineno);}
-"++"        {lexprint(yytext, "INC", yylineno);}
-"--"        {lexprint(yytext, "DEC", yylineno);}
-"&&"        {lexprint(yytext, "AND", yylineno);}
-"||"        {lexprint(yytext, "OR", yylineno);}
-"!"         {lexprint(yytext, "NO", yylineno);}
-"=="        {lexprint(yytext, "EQUAL", yylineno);}
-"!="        {lexprint(yytext, "NOEQUAL", yylineno);}
-"==="       {lexprint(yytext, "EQUAL_LINK", yylineno);}
-"!=="       {lexprint(yytext, "NOEQUAL_LINK", yylineno);}
-">"         {lexprint(yytext, "MORE", yylineno);}
-"<"         {lexprint(yytext, "SMALLER", yylineno);}
-">="        {lexprint(yytext, "MORE_OR_EQUAL", yylineno);}
-"<="        {lexprint(yytext, "SMALLER_OR_EQUAL", yylineno);}
-"!!"        {lexprint(yytext, "ASSERT_NON_NULL", yylineno);}
-"?."        {lexprint(yytext, "SAFE_CALL", yylineno);}
-"?:"        {lexprint(yytext, "ELVIS_OPERATOR", yylineno);}
-"::"        {lexprint(yytext, "CLASS_REFERENCE_OPERATOR", yylineno);}
-".."        {lexprint(yytext, "CREATE_RANGE_OPERATOR", yylineno);}
-":"         {lexprint(yytext, "NAME_TYPE_SEPARATOR", yylineno);}
-"?"         {lexprint(yytext, "MARK_NULLABLE_TYPE", yylineno);}
-"->"        {lexprint(yytext, "LAMBDA_EXPRESSION", yylineno);}
-"@"         {lexprint(yytext, "ANNOTATION", yylineno);}
-";"         {lexprint(yytext, "SEPARATOR_MULTIPLE_STATEMENT", yylineno);}
-"_"         {lexprint(yytext, "SUBSTITUTE_AN_UNUSED_PARAMETER", yylineno);}
-"$"         {lexprint(yytext, "REFERENCES_A_VARIABLE_OR_EXPRESSION_IN_A_STRING_TEMPLATE", yylineno);}
-"."         {lexprint(yytext, "CALL_METHOD", yylineno);}
-","         {lexprint(yytext, "ENUMERATION_OPERATOR", yylineno);}
-"["         {lexprint(yytext, "OPENING_SQUARE_BRACKET", yylineno);}
-"]"         {lexprint(yytext, "CLOSING_SQUARE_BRACKET", yylineno);}
-"{"         {lexprint(yytext, "OPENING_OPERATOR_BRACKET", yylineno);}
-"}"         {lexprint(yytext, "CLOSING_OPERATOR_BRACKET", yylineno);}
-"("         {lexprint(yytext, "OPENING_PARENTHESIS", yylineno);}
-")"         {lexprint(yytext, "CLOSING_PARENTHESIS", yylineno);}
+"+"         {lexprint(yytext, "SUM", yylineno, &count);}
+"-"         {lexprint(yytext, "MINUS", yylineno, &count);}
+"*"         {lexprint(yytext, "MULTIPLY", yylineno, &count);}
+"/"         {lexprint(yytext, "DIV", yylineno, &count);}
+"%"         {lexprint(yytext, "MOD", yylineno, &count);}
+"="         {lexprint(yytext, "ASSIGN", yylineno, &count);}
+"+="        {lexprint(yytext, "SUM_ASSIGN", yylineno, &count);}
+"-="        {lexprint(yytext, "MINUS_ASSIGN", yylineno, &count);}
+"*="        {lexprint(yytext, "MULTIPLY_ASSIGN", yylineno, &count);}
+"/="        {lexprint(yytext, "DIV_ASSIGN", yylineno, &count);}
+"%="        {lexprint(yytext, "MOD_ASSIGN", yylineno, &count);}
+"++"        {lexprint(yytext, "INC", yylineno, &count);}
+"--"        {lexprint(yytext, "DEC", yylineno, &count);}
+"&&"        {lexprint(yytext, "AND", yylineno, &count);}
+"||"        {lexprint(yytext, "OR", yylineno, &count);}
+"!"         {lexprint(yytext, "NO", yylineno, &count);}
+"=="        {lexprint(yytext, "EQUAL", yylineno, &count);}
+"!="        {lexprint(yytext, "NOEQUAL", yylineno, &count);}
+"==="       {lexprint(yytext, "EQUAL_LINK", yylineno, &count);}
+"!=="       {lexprint(yytext, "NOEQUAL_LINK", yylineno, &count);}
+">"         {lexprint(yytext, "MORE", yylineno, &count);}
+"<"         {lexprint(yytext, "SMALLER", yylineno, &count);}
+">="        {lexprint(yytext, "MORE_OR_EQUAL", yylineno, &count);}
+"<="        {lexprint(yytext, "SMALLER_OR_EQUAL", yylineno, &count);}
+"!!"        {lexprint(yytext, "ASSERT_NON_NULL", yylineno, &count);}
+"?."        {lexprint(yytext, "SAFE_CALL", yylineno, &count);}
+"?:"        {lexprint(yytext, "ELVIS_OPERATOR", yylineno, &count);}
+"::"        {lexprint(yytext, "CLASS_REFERENCE_OPERATOR", yylineno, &count);}
+".."        {lexprint(yytext, "CREATE_RANGE_OPERATOR", yylineno, &count);}
+":"         {lexprint(yytext, "NAME_TYPE_SEPARATOR", yylineno, &count);}
+"?"         {lexprint(yytext, "MARK_NULLABLE_TYPE", yylineno, &count);}
+"->"        {lexprint(yytext, "LAMBDA_EXPRESSION", yylineno, &count);}
+"@"         {lexprint(yytext, "ANNOTATION", yylineno, &count);}
+";"         {lexprint(yytext, "SEPARATOR_MULTIPLE_STATEMENT", yylineno, &count);}
+"_"         {lexprint(yytext, "SUBSTITUTE_AN_UNUSED_PARAMETER", yylineno, &count);}
+"$"         {lexprint(yytext, "REFERENCES_A_VARIABLE_OR_EXPRESSION_IN_A_STRING_TEMPLATE", yylineno, &count);}
+"."         {lexprint(yytext, "CALL_METHOD", yylineno, &count);}
+","         {lexprint(yytext, "ENUMERATION_OPERATOR", yylineno, &count);}
+"["         {lexprint(yytext, "OPENING_SQUARE_BRACKET", yylineno, &count);}
+"]"         {lexprint(yytext, "CLOSING_SQUARE_BRACKET", yylineno, &count);}
+"{"         {lexprint(yytext, "OPENING_OPERATOR_BRACKET", yylineno, &count);}
+"}"         {lexprint(yytext, "CLOSING_OPERATOR_BRACKET", yylineno, &count);}
+"("         {lexprint(yytext, "OPENING_PARENTHESIS", yylineno, &count);}
+")"         {lexprint(yytext, "CLOSING_PARENTHESIS", yylineno, &count);}
 
 
 \/\*                 {str[0]=0; BEGIN(MLCOMMENT); }
 <MLCOMMENT>\t        {strcat(str,"\\t");}
 <MLCOMMENT>\n        {strcat(str,"\\n");}
 <MLCOMMENT>.         {strcat(str,yytext);}
-<MLCOMMENT>\*\/      {lexprint(str, "MLCOMMENT", yylineno); BEGIN(INITIAL);}
+<MLCOMMENT>\*\/      {lexprint(str, "MLCOMMENT", yylineno, &count); BEGIN(INITIAL);}
 
 
 \/\/                 {str[0]=0; BEGIN(LCOMMENT);}
-<LCOMMENT>\n         {lexprint(str, "LCOMMENT", yylineno); BEGIN(INITIAL);}
+<LCOMMENT>\n         {lexprint(str, "LCOMMENT", yylineno, &count); BEGIN(INITIAL);}
 
 
 {WHITESPACE}+        {/* skip {WHITESPACE} */}
@@ -230,7 +230,7 @@ Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 <SYMBOL>\\f          {strcat(str,"\f");}
 <SYMBOL>\\$          {strcat(str,"\$");}
 <SYMBOL>[^\\\'\n]    {strcat(str,yytext);}
-<SYMBOL>\'           {if(strlen(str) == 1) {lexprint(str, "SYMBOL", yylineno);}else {fprintf(stderr, "Too many characters in a character literal \'\'%s\'\' in %d line \n", str, yylineno); str[0] = 0;} BEGIN(INITIAL);}
+<SYMBOL>\'           {if(strlen(str) == 1) {lexprint(str, "SYMBOL", yylineno, &count);}else {fprintf(stderr, "Too many characters in a character literal \'\'%s\'\' in %d line \n", str, yylineno); str[0] = 0;} BEGIN(INITIAL);}
 <SYMBOL>[^"\n]\n     {strcat(str,yytext); fprintf(stderr, "%s Expecting \' in %d line \n", str, yylineno); str[0] = 0; BEGIN(INITIAL);}
 
 
@@ -245,18 +245,18 @@ Array       {lexprint(yytext, "TYPE_ARRAY", yylineno);}
 <STRING>\\f          {strcat(str,"\f");}
 <STRING>\\$          {strcat(str,"\$");}
 <STRING>\${ID}       {
-                      lexprint(str, "STRING", yylineno);
-                      lexprint("+", "SUM", yylineno);
-                      lexprint((yytext+1), "ID", yylineno);
-                      lexprint("+", "SUM", yylineno);
+                      lexprint(str, "STRING", yylineno, &count);
+                      lexprint("+", "SUM", yylineno, &count);
+                      lexprint((yytext+1), "ID", yylineno, &count);
+                      lexprint("+", "SUM", yylineno, &count);
                       str[0]=0;
 }
 <STRING>[^\\\"\n]    {strcat(str,yytext);}
-<STRING>\"           {lexprint(str, "STRING", yylineno); BEGIN(INITIAL);}
+<STRING>\"           {lexprint(str, "STRING", yylineno, &count); BEGIN(INITIAL);}
 <STRING>[^"\n]*\n    {strcat(str,yytext);fprintf(stderr, "%s Expecting \" in %d line \n", str, yylineno); str[0] = 0; BEGIN(INITIAL);}
 
 
-.                    {fprintf(stderr, "%s Not Found in %d line \n", yytext, yylineno);}
+.                    {fprintf(stderr, "%s Not Found in %d line \n", yytext, yylineno, &count);}
 %%
 
 
@@ -272,9 +272,9 @@ void main(int argc, char **argv ){
         return;
 }
 
-void lexprint(char * lexem, char  token[], int line){
-        printf("%s\t%s\t%d\t%d\n", lexem, token, yylineno, count);
-        count++;
+void lexprint(char * lexem, char  token[], int line, int *count){
+        printf("%s\t%s\t%d\t%d\n", lexem, token, yylineno, *count);
+        *count = *count + 1  ;
 }
 
 void squeeze (char* str, char symbol) {
@@ -283,7 +283,7 @@ void squeeze (char* str, char symbol) {
 
         for (i = j = 0; str[i] != '\0'; i++) 
                 if (str[i] != symbol) 
-                        str[j++] = str[i]; 
+                        str[j++] = str[i];
         str[j] = '\0'; 
 }
 
