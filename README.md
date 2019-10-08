@@ -4,7 +4,7 @@ This project is a Kotlin language lexer. Kotlin is a statically typed programmin
 
 ## Install 
 
-[Installation guide](http://example.com/) GCC and Flex GNU for Windows.
+[Installation guide](https://github.com/Mamoru01/LexerKotlin/blob/master/INSTALL.md) GCC and Flex GNU for Windows.
 
 ## Compilation 
 
