@@ -1,182 +1,230 @@
+
 # Grammar
 
 ```bison
 
 program
-:   file EOF 
-;
+  : file EOF 
+  ;
 
 class_list
-:   classDeclaration
-    | class_list classDeclaration
-;
+  : classDeclaration
+  | class_list classDeclaration
+  ;
 
 func_list
-:   functionDeclaration
-    | func_list functionDeclaration
-;
+  : functionDeclaration
+  | func_list functionDeclaration
+  ;
 
 func_and_class_list: func_list
     | class_list
     ;
 
 file
-:   func_and_class_list
-    | file_list func_and_class_list
-    | /*empty*/
-    | error_token
-;
+  : func_and_class_list
+  | file_list func_and_class_list
+  | /*empty*/
+  | error_token
+  ;
 
 parameter
-:   ID ':' type
-;
+  : ID ':' type
+  ;
 
 type
-:   TYPE_DOUBLE
-    | TYPE_FLOAT
-    | TYPE_LONG
-    | TYPE_INT
-    | TYPE_SHORT
-    | TYPE_BYTE
-    | TYPE_STRING
-;
+  : TYPE_DOUBLE
+  | TYPE_FLOAT
+  | TYPE_LONG
+  | TYPE_INT
+  | TYPE_SHORT
+  | TYPE_BYTE
+  | TYPE_STRING
+  ;
 
 parameters_list_opt
-:   parameters_list
-    | /*empty*/
-;
+  : parameters_list
+  | /*empty*/
+  ;
 
 parameters_list
-:   parameter
-    | parameters_list ',' parameter
-    | parameters_list ',' parameter '='  expression
-;
+  : parameter
+  | parameters_list ',' parameter
+  | parameters_list ',' parameter '='  expression
+  ;
 
 functionParameters 
-:   '(' parameters_list_opt ')'
-;
+  : '(' parameters_list_opt ')'
+  ;
 
 functionDeclaration
-:  FUN ID functionParameters ':' type functionBody
-;
+  : FUN ID functionParameters ':' type functionBody
+  ;
 
 functionBody
-:   block
-    | '=' expression
-;
+  : block
+  | '=' expression
+  ;
 
 functionCall:
-:   ID '(' functionValueParameters_opt ')'
-;
+  : ID '(' functionValueParameters_opt ')'
+  ;
 
 functionValueParameter
-:   ID
-    | literal
-;
+  : ID
+  | literal
+  ;
 
-functionValueParameters
-:   functionValueParameter
-|   functionValueParameters ',' functionValueParameter
-;
+functionValueParameters 
+  : functionValueParameter
+  | functionValueParameters ',' functionValueParameter
+  ;
 
 functionValueParameters_opt
-:   functionValueParameters
-|   /*empty*/
-;
-
-expression
-:   literal
-	| ID
-	| functionCall
-	| '(' expressionNumber ')'
-	| expressionNumber '-' expressionNumber
-	| expressionNumber '+' expressionNumber
-	| expressionNumber '*' expressionNumber
-	| expressionNumber '/' expressionNumber
-	| expressionNumber '%' expressionNumber
-	| expressionNumber '!' expressionNumber
-	| expressionNumber '==' expressionNumber
-	| expressionNumber '!=' expressionNumber
-	| expressionNumber '===' expressionNumber
-	| expressionNumber '!==' expressionNumber
-	| expressionNumber ">" expressionNumber
-	| expressionNumber "<" expressionNumber
-	| expressionNumber ">=" expressionNumber
-	| expressionNumber "<=" expressionNumber
-	| expressionNumber "&&" expressionNumber
-	| expressionNumber "||" expressionNumber
-;
+  : functionValueParameters
+  | /*empty*/
+  ;
 
 literal
-:   INT_10
-	| INT_16
-	| INT_2
-	| EXPONENT
-	| REAL
-    | STRING
-    | SYMBOL
-;
+  : REAL
+  | EXPONENT
+  | INT_10
+  | INT_2
+  | INT_16
+  | SYMBOL
+  | STRING
+  ;
+
+expression
+  : literal
+  | ID
+  | functionCall
+  | '(' expressionNumber ')'
+  | additiveOperator
+  | multiplicativeOperator 
+  | expressionNumber '!' expressionNumber
+  | equalityOperator
+  | comparisonOperator
+  | expressionNumber "&&" expressionNumber
+  | expressionNumber "||" expressionNumber
+  ;
+
+literal
+  : INT_10
+  | INT_16
+  | INT_2
+  | EXPONENT
+  | REAL
+  | STRING
+  | SYMBOL
+  ;
 
 block
-:   '{' statements_ots '}'
-;
+  : '{' statements_ots '}'
+  ;
 
 statements_ots
-:   statements
-    |/*empty*/
-;
+  : statements
+  |/*empty*/
+  ;
 
 statements
-:   statements
-    | statements statement
-;
+  : statements
+  | statements statement
+  ;
 
-statement
-:   declaration 
-    | assignment 
-    | loopStatement 
-    | expression
-;
+statement 
+  : declaration 
+  | assignment 
+  | loopStatement 
+  | expression
+  ;
 
 declaration 
-:   classDeclaration
-    | functionDeclaration
-;
+  : classDeclaration
+  | functionDeclaration
+  ;
 
 controlStructureBody 
-: block
-    | statement
-;
+  : block
+  | statement
+  ;
 
-loopStatement (used by statement)
-:   forStatement
-    | whileStatement
-    | doWhileStatement
-;
+loopStatement 
+  : forStatement
+  | whileStatement
+  | doWhileStatement
+  ;
 
-whileStatement (used by loopStatement)
-: while '(' expression ')' controlStructureBody
-    | while '(' expression ')' ';'
-;
+whileStatement
+  : while '(' expression ')' controlStructureBody
+  | while '(' expression ')' ';'
+  ;
 
 doWhileStatement (used by loopStatement)
-:   do controlStructureBody while '(' expression ')'
-;
+  : do controlStructureBody while '(' expression ')'
+  ;
 
 forStatement 
-:   for '(' variableDeclaration 'in' expression ')'
-    controlStructureBody
-;
+  : for '(' variableDeclaration 'in' expression ')'  controlStructureBody
+  ;
 
 variableDeclaration 
-:   ID ':' type
-;
+  : ID ':' type
+  ;
 
 assignment
-:   ;
+  : directlyAssignableExpression '=' expression
+  | assignableExpression assignmentAndOperator expression
+  | indexAssignment expression;
+  ;
 
 classDeclaration
 :   ;
 
+assignmentAndOperator 
+  : '+='
+  | '-='
+  | '*='
+  | '/='
+  | '%='
+  ;
+equalityOperator 
+  : '!='
+  | '!=='
+  | '=='
+  | '==='
+  ;
+comparisonOperator 
+  : '<'
+  | '>'
+  | '<='
+  | '>='
+  ;
+inOperator 
+  : 'in'
+  | '!in'
+  ;
+
+additiveOperator 
+  : '+'
+  | '-'
+  ;
+
+multiplicativeOperator 
+  : '*'
+  | '/'
+  | '%'
+  ;
+
+  indexAssignment
+  : ID index_list '='
+  | ID index_list assignmentAndOperator
+  ;
+
+  index_list
+  : '[' functionValueParameter ']'
+  | index_list '[' functionValueParameter ']'
+  ;
 
 ```
