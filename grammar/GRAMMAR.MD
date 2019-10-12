@@ -1,3 +1,7 @@
+# Grammar
+
+```bison
+
 program
 :   file EOF 
 ;
@@ -175,3 +179,4 @@ classDeclaration
 :   ;
 
 
+```
