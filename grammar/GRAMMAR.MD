@@ -179,8 +179,19 @@ assignment
   | indexAssignment expression;
   ;
 
+directlyAssignableExpression
+  : assignableExpression
+  | ID
+  ;
+
+assignableExpression
+  : val variableDeclaration
+  | var variableDeclaration
+  ;
+
+
 classDeclaration
-:   ;
+:  TODO: Мб сделаем ;
 
 assignmentAndOperator 
   : '+='
