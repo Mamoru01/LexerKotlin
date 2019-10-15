@@ -14,6 +14,7 @@
         int binaryToDecimal(char* strBin);
 %}
 
+%x TRIPLE_QUOTE_STRING
 %x STRING
 %x SYMBOL
 %x MLCOMMENT
@@ -47,8 +48,7 @@ EXPONENT        (({INT_10}|{REAL})e[+-]?{NUM})
 
 %{
 	int count = 1;
-    char str[100];
-	char idHeredoc[100];
+    char str[1000];
 %}
 
 as          {lexprint(yytext, "AS", "HARD_KEYWORD", yylineno, &count);}
@@ -203,6 +203,7 @@ Array       {lexprint(yytext, "TYPE_ARRAY", "TYPE_ARRAY", yylineno, &count);}
 "("         {lexprint(yytext, "OPENING_PARENTHESIS", "OPERATOR_SPECIAL_SYMBOL", yylineno, &count);}
 ")"         {lexprint(yytext, "CLOSING_PARENTHESIS", "OPERATOR_SPECIAL_SYMBOL", yylineno, &count);}
 
+{NEXTLINE} {lexprint("\\n", "NEXT_LINE", "SPECIAL_SYMBOL", yylineno, &count);}
 
 \/\*                 {str[0]=0; BEGIN(MLCOMMENT); }
 <MLCOMMENT>\t        {strcat(str,"\\t");}
@@ -214,10 +215,13 @@ Array       {lexprint(yytext, "TYPE_ARRAY", "TYPE_ARRAY", yylineno, &count);}
 \/\/                 {str[0]=0; BEGIN(LCOMMENT);}
 <LCOMMENT>\n         {lexprint(str, "LCOMMENT", "SINGLE_LINE_COMMENT", yylineno, &count); BEGIN(INITIAL);}
 
-
 {WHITESPACE}+        {/* skip {WHITESPACE} */}
-{NEXTLINE}           {/* skip {NEXTLINE} */}
 
+\"{3}                                    { str[0]=0; BEGIN(TRIPLE_QUOTE_STRING); }
+<TRIPLE_QUOTE_STRING>\t                  {strcat(str,"\\t");}
+<TRIPLE_QUOTE_STRING>\n                  {strcat(str,"\\n");}
+<TRIPLE_QUOTE_STRING>(.|\n)              {strcat(str,yytext);}
+<TRIPLE_QUOTE_STRING>\"{3}.*{NEXTLINE}   { lexprint(str, "TRIPLE_QUOTE_STRING", "STRING_CONSTANT", yylineno, &count); BEGIN(INITIAL);}
 
 \'                   {str[0]=0; BEGIN(SYMBOL);}
 <SYMBOL>\\\\         {strcat(str,"\\");}
