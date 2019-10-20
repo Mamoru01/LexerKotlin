@@ -3,33 +3,25 @@
 
 ```bison
 
-program
+program 
   : file EOF 
-  ;
+  ; 
 
-class_list
-  : classDeclaration
-  | class_list classDeclaration
-  ;
+func_and_class_list 
+  : functionDeclaration 
+  | classDeclaration 
+  | func_and_class_list functionDeclaration 
+  | func_and_class_list classDeclaration 
+  ; 
 
-func_list
-  : functionDeclaration
-  | func_list functionDeclaration
-  ;
+file 
+  : func_and_class_list 
+  | /*empty*/ 
+  | error_token 
+  ; 
 
-func_and_class_list: func_list
-    | class_list
-    ;
-
-file
-  : func_and_class_list
-  | file_list func_and_class_list
-  | /*empty*/
-  | error_token
-  ;
-
-parameter
-  : ID ':' type
+parameter 
+  : ID ':' type 
   ;
 
 type
@@ -49,16 +41,13 @@ parameters_list_opt
 
 parameters_list
   : parameter
+  | parameter '='  expression
   | parameters_list ',' parameter
   | parameters_list ',' parameter '='  expression
   ;
 
-functionParameters 
-  : '(' parameters_list_opt ')'
-  ;
-
 functionDeclaration
-  : FUN ID functionParameters ':' type functionBody
+  : FUN ID '(' parameters_list_opt ')' ':' type functionBody
   ;
 
 functionBody
@@ -73,6 +62,7 @@ functionCall:
 functionValueParameter
   : ID
   | literal
+  | expression
   ;
 
 functionValueParameters 
@@ -85,7 +75,7 @@ functionValueParameters_opt
   | /*empty*/
   ;
 
-literal
+expression
   : REAL
   | EXPONENT
   | INT_10
@@ -93,30 +83,28 @@ literal
   | INT_16
   | SYMBOL
   | STRING
-  ;
-
-expression
-  : literal
-  | ID
+  | ID index_list
   | functionCall
-  | '(' expressionNumber ')'
-  | additiveOperator
-  | multiplicativeOperator 
-  | expressionNumber '!' expressionNumber
-  | equalityOperator
-  | comparisonOperator
-  | expressionNumber "&&" expressionNumber
-  | expressionNumber "||" expressionNumber
-  ;
-
-literal
-  : INT_10
-  | INT_16
-  | INT_2
-  | EXPONENT
-  | REAL
-  | STRING
-  | SYMBOL
+  | ID
+  | '(' expression ')'
+  | expression '+' expression
+  | expression '-' expression
+  | expression '*' expression
+  | expression '/' expression
+  | expression '%' expression
+  | expression '!' expression
+  | expression '!=' expression
+  | expression '!==' expression
+  | expression '==' expression
+  | expression '===' expression
+  | expression '<' expression
+  | expression '>' expression
+  | expression '<=' expression
+  | expression '>=' expression
+  | expression "&&" expression
+  | expression "||" expression
+  | expression 'in' expression
+  | expression '!in' expression
   ;
 
 block
@@ -137,17 +125,27 @@ statement
   : declaration 
   | assignment 
   | loopStatement 
+  | ifStatement
   | expression
+  | block
+  | returnStatement
+  | assignableExpression ';'
+  | assignableExpression
+  ;
+
+returnStatement
+  : RETURN destructionAssignment;
+  | RETURN expression;
+  :
+
+ifStatement
+  : IF '(' expression ')' statement
+  | IF '(' expression ')' statement ELSE statement
   ;
 
 declaration 
   : classDeclaration
   | functionDeclaration
-  ;
-
-controlStructureBody 
-  : block
-  | statement
   ;
 
 loopStatement 
@@ -157,20 +155,16 @@ loopStatement
   ;
 
 whileStatement
-  : while '(' expression ')' controlStructureBody
-  | while '(' expression ')' ';'
+  : WHILE '(' expression ')' statement
+  | WHILE '(' expression ')' ';'
   ;
 
-doWhileStatement (used by loopStatement)
-  : do controlStructureBody while '(' expression ')'
+doWhileStatement 
+  : DO statement WHILE '(' expression ')'
   ;
 
 forStatement 
-  : for '(' variableDeclaration 'in' expression ')'  controlStructureBody
-  ;
-
-variableDeclaration 
-  : ID ':' type
+  : FOR '(' parameter 'in' expression ')'  statement
   ;
 
 assignment
@@ -185,8 +179,8 @@ directlyAssignableExpression
   ;
 
 assignableExpression
-  : val variableDeclaration
-  | var variableDeclaration
+  : VAL variableDeclaration
+  | VAR variableDeclaration
   ;
 
 
@@ -200,42 +194,26 @@ assignmentAndOperator
   | '/='
   | '%='
   ;
-equalityOperator 
-  : '!='
-  | '!=='
-  | '=='
-  | '==='
-  ;
-comparisonOperator 
-  : '<'
-  | '>'
-  | '<='
-  | '>='
-  ;
-inOperator 
-  : 'in'
-  | '!in'
-  ;
 
-additiveOperator 
-  : '+'
-  | '-'
-  ;
-
-multiplicativeOperator 
-  : '*'
-  | '/'
-  | '%'
-  ;
-
-  indexAssignment
+indexAssignment
   : ID index_list '='
   | ID index_list assignmentAndOperator
+  | destructionAssignment
   ;
 
-  index_list
-  : '[' functionValueParameter ']'
-  | index_list '[' functionValueParameter ']'
+index_list
+  : '[' expression ']'
+  | index_list '[' expression ']'
+  ;
+
+id_list
+  : ID
+  | id_list ',' ID
+  ;
+
+destructionAssignment
+  :  '(' id_list ')' '=' ID
+  |  '(' id_list ')' '=' functionCall
   ;
 
 ```
