@@ -42,7 +42,7 @@ NUM             [0-9]+
 REAL            ((({INT_10})?[\.]{INT_10})|({INT_10}[\.]({INT_10})?))
 EXPONENT        (({INT_10}|{REAL})e[+-]?{NUM})
 
-
+UNICODE_CHAR    \\u[0-9A-F]{4}
 
 %%
 
@@ -223,37 +223,41 @@ Array       {lexprint(yytext, "TYPE_ARRAY", "TYPE_ARRAY", yylineno, &count);}
 <TRIPLE_QUOTE_STRING>(.|\n)              {strcat(str,yytext);}
 <TRIPLE_QUOTE_STRING>\"{3}.*{NEXTLINE}   { lexprint(str, "TRIPLE_QUOTE_STRING", "STRING_CONSTANT", yylineno, &count); BEGIN(INITIAL);}
 
-\'                   {str[0]=0; BEGIN(SYMBOL);}
-<SYMBOL>\\\\         {strcat(str,"\\");}
-<SYMBOL>\\\"         {strcat(str, "\"");}
-<SYMBOL>\\n          {strcat(str,"\n");}
-<SYMBOL>\\r          {strcat(str,"\r");}
-<SYMBOL>\\t          {strcat(str,"\t");}
-<SYMBOL>\\v          {strcat(str,"\v");}
-<SYMBOL>\\e          {strcat(str,"\e");}
-<SYMBOL>\\f          {strcat(str,"\f");}
-<SYMBOL>\\$          {strcat(str,"\$");}
-<SYMBOL>[^\\\'\n]    {strcat(str,yytext);}
-<SYMBOL>\'           {if(strlen(str) == 1) {lexprint(str, "SYMBOL", "CHARACTER_CONSTANT", yylineno, &count);}else {fprintf(stderr, "Too many characters in a character literal \'\'%s\'\' in %d line \n", str, yylineno); str[0] = 0;} BEGIN(INITIAL);}
-<SYMBOL>[^"\n]\n     {strcat(str,yytext); fprintf(stderr, "%s Expecting \' in %d line \n", str, yylineno); str[0] = 0; BEGIN(INITIAL);}
+\'                     {str[0]=0; BEGIN(SYMBOL);}
+<SYMBOL>{UNICODE_CHAR} {strcat(str, yytext);}
+<SYMBOL>\\\\           {strcat(str,"\\");}
+<SYMBOL>\\\"           {strcat(str, "\"");}
+<SYMBOL>\\n            {strcat(str,"\n");}
+<SYMBOL>\\r            {strcat(str,"\r");}
+<SYMBOL>\\t            {strcat(str,"\t");}
+<SYMBOL>\\v            {strcat(str,"\v");}
+<SYMBOL>\\e            {strcat(str,"\e");}
+<SYMBOL>\\f            {strcat(str,"\f");}
+<SYMBOL>\\$            {strcat(str,"\$");}
+<SYMBOL>[^\\\'\n]      {strcat(str,yytext);}
+<SYMBOL>\'             {if(strlen(str) == 1) {lexprint(str, "SYMBOL", "CHARACTER_CONSTANT", yylineno, &count);}
+                       else if (strstr(str, "\\u") && strlen(str) == 6){lexprint(str, "SYMBOL", "CHARACTER_CONSTANT", yylineno, &count);}
+                       else {fprintf(stderr, "Too many characters in a character literal \'\'%s\'\' in %d line \n", str, yylineno); str[0] = 0;} BEGIN(INITIAL);}
+<SYMBOL>[^"\n]\n       {strcat(str,yytext); fprintf(stderr, "%s Expecting \' in %d line \n", str, yylineno); str[0] = 0; BEGIN(INITIAL);}
 
 
-\"                   {str[0]=0; BEGIN(STRING);}
-<STRING>\\\\         {strcat(str,"\\");}
-<STRING>\\\"         {strcat(str, "\"");}
-<STRING>\\n          {strcat(str,"\n");}
-<STRING>\\r          {strcat(str,"\r");}
-<STRING>\\t          {strcat(str,"\t");}
-<STRING>\\v          {strcat(str,"\v");}
-<STRING>\\e          {strcat(str,"\e");}
-<STRING>\\f          {strcat(str,"\f");}
-<STRING>\\$          {strcat(str,"\$");}
-<STRING>\${ID}       {
-                      lexprint(str, "STRING", "STRING_CONSTANT", yylineno, &count);
-                      lexprint("+", "SUM", "OPERATOR_SPECIAL_SYMBOL", yylineno, &count);
-                      lexprint((yytext+1), "ID", "IDENTIFIER", yylineno, &count);
-                      lexprint("+", "SUM", "OPERATOR_SPECIAL_SYMBOL", yylineno, &count);
-                      str[0]=0;
+\"                     {str[0]=0; BEGIN(STRING);}
+<STRING>{UNICODE_CHAR} {strcat(str, yytext);}
+<STRING>\\\\           {strcat(str,"\\");}
+<STRING>\\\"           {strcat(str, "\"");}
+<STRING>\\n            {strcat(str,"\n");}
+<STRING>\\r            {strcat(str,"\r");}
+<STRING>\\t            {strcat(str,"\t");}
+<STRING>\\v            {strcat(str,"\v");}
+<STRING>\\e            {strcat(str,"\e");}
+<STRING>\\f            {strcat(str,"\f");}
+<STRING>\\$            {strcat(str,"\$");}
+<STRING>\${ID}         {
+                        lexprint(str, "STRING", "STRING_CONSTANT", yylineno, &count);
+                        lexprint("+", "SUM", "OPERATOR_SPECIAL_SYMBOL", yylineno, &count);
+                        lexprint((yytext+1), "ID", "IDENTIFIER", yylineno, &count);
+                        lexprint("+", "SUM", "OPERATOR_SPECIAL_SYMBOL", yylineno, &count);
+                        str[0]=0;
 }
 <STRING>[^\\\"\n]    {strcat(str,yytext);}
 <STRING>\"           {lexprint(str, "STRING", "STRING_CONSTANT", yylineno, &count); BEGIN(INITIAL);}

@@ -1,18 +1,34 @@
 ﻿import foo.Bar // Bar доступен
 import bar.Bar as bBar // bBar заменяет имя 'bar.Bar'
 
+    val text = """ |Tell me an\n I forget.
+    |Teach me and I remember.
+    |Involve me and I lear"n.
+    |(Benjamin Franklin)"""
+
+    val sa = """ |Tell me an\n I forget.
+    |Teach me and I remember.
+    |Involve me and I lear"n.
+    |(Benjamin Franklin)"
+    """
+
+    val a = """"""
+
+    print(text)
 interface A {
-    fun foo() { print("A") }
-    fun bar()
+    fun foo() { print('\u00000') }
+    fun bar() { print('\u0000') }
+	a == b AD==AS
+	AD == D
 }
 
 interface B {
-    fun foo() { print("B") }
-    fun bar() { print("bar") }
+    fun foo() { print("\u0111") }
+    fun bar() { print("bar\u4444") }
 }
 
 class C : A {
-    override fun bar() { print("bar") }
+    override fun bar() { print("asd\u2FFFbar") }
 }
 
 class D : A, B {
