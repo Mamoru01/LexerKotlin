@@ -16,8 +16,8 @@ import bar.Bar as bBar // bBar заменяет имя 'bar.Bar'
 
     print(text)
 interface A {
-    fun foo() { print('\u00000') }
-    fun bar() { print('\u0000') }
+    fun foo() { print('\u00C7') }
+    fun bar() { print('\u0040') }
 	a == b AD==AS
 	AD == D
 }

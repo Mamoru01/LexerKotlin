@@ -8,6 +8,7 @@
     #include <string.h>
     #include <conio.h>
     #include <locale.h>
+    #include "../lib/utf_encode.h"
 
         void lexprint(char* lexem, char  token[], char  tokenType[], int line, int *count);
         void squeeze (char* str, char symbol);
@@ -236,13 +237,13 @@ Array       {lexprint(yytext, "TYPE_ARRAY", "TYPE_ARRAY", yylineno, &count);}
 <SYMBOL>\\$            {strcat(str,"\$");}
 <SYMBOL>[^\\\'\n]      {strcat(str,yytext);}
 <SYMBOL>\'             {if(strlen(str) == 1) {lexprint(str, "SYMBOL", "CHARACTER_CONSTANT", yylineno, &count);}
-                       else if (strstr(str, "\\u") && strlen(str) == 6){lexprint(str, "SYMBOL", "CHARACTER_CONSTANT", yylineno, &count);}
+                       else if (strstr(str, "\\u") && strlen(str) == 6){lexprint(to_utf8(str), "SYMBOL", "CHARACTER_CONSTANT", yylineno, &count);}
                        else {fprintf(stderr, "Too many characters in a character literal \'\'%s\'\' in %d line \n", str, yylineno); str[0] = 0;} BEGIN(INITIAL);}
 <SYMBOL>[^"\n]\n       {strcat(str,yytext); fprintf(stderr, "%s Expecting \' in %d line \n", str, yylineno); str[0] = 0; BEGIN(INITIAL);}
 
 
 \"                     {str[0]=0; BEGIN(STRING);}
-<STRING>{UNICODE_CHAR} {strcat(str, yytext);}
+<STRING>{UNICODE_CHAR} {strcat(str, to_utf8(yytext));}
 <STRING>\\\\           {strcat(str,"\\");}
 <STRING>\\\"           {strcat(str, "\"");}
 <STRING>\\n            {strcat(str,"\n");}
