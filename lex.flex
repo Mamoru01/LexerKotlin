@@ -152,7 +152,7 @@ Array       {lexprint(yytext, "TYPE_ARRAY", "TYPE_ARRAY", yylineno, &count);}
 
 
 {EXPONENT}  {strcpy(str,yytext); squeeze(str, '_');  printf("%e\t%s\t%s\t%d\t%d\n",atoll(str), "EXPONENT", "TYPE_NUMBER", yylineno, count); count++; str[0] = 0;}
-{REAL}[^.]  {strcpy(str,yytext); squeeze(str, '_');  printf("%f\t%s\t%s\t%d\t%d\n",atof(str), "REAL", "TYPE_NUMBER", yylineno, count); count++; str[0] = 0;}
+{REAL}      {strcpy(str,yytext); squeeze(str, '_');  printf("%f\t%s\t%s\t%d\t%d\n",atof(str), "REAL", "TYPE_NUMBER", yylineno, count); count++; str[0] = 0;}
 {INT_10}    {strcpy(str,yytext); squeeze(str, '_');  printf("%d\t%s\t%s\t%d\t%d\n",atoi(str), "INT_10", "TYPE_NUMBER", yylineno, count); count++; str[0] = 0;}
 {INT_16}    {strcpy(str,yytext); squeeze(str, '_');  int n16; sscanf(str,"%i", &n16); printf("%i\t%s\t%s\t%d\t%d\n", n16, "INT_16", "TYPE_NUMBER", yylineno, count); count++; str[0] = 0;}
 {INT_2}     {strcpy(str,yytext); squeeze(str, '_');  printf("%d\t%s\t%s\t%d\t%d\n",binaryToDecimal(str), "INT_2", "TYPE_NUMBER", yylineno, count); count++; str[0] = 0;}
